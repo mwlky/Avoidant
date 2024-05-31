@@ -8,5 +8,8 @@ add_subdirectory("../Core" Core)
 
 file(GLOB Source "Code/*.cpp")
 
-add_executable(Game "${Source}")
+add_executable(Game "${Source}"
+        Code/Data/WindowSettings.h
+        Code/Game.cpp
+        Code/Game.h)
 target_link_libraries(Game PUBLIC Engine)

@@ -1,6 +1,13 @@
-#include "../../Core/Code/Engine.h"
+#include "Game.h"
 
 int main() {
-    while (true)
-        Engine::Hello();
+    Application::Game game;
+    game.Init();
+
+    while (game.IsRunning()){
+
+        game.HandleEvents();
+        game.Render();
+        game.Tick();
+    }
 }

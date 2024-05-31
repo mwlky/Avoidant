@@ -1,6 +1,13 @@
-#include <iostream>
 #include "Engine.h"
 
-void Engine::Hello() {
-    std::cout << "Hello!\n";
+namespace Engine {
+
+    void Engine::OpenWindow(const char* title, int x, int y, int width, int height) {
+        m_Window = new Window(title, x, y, width, height);
+    }
+
+    Engine::~Engine() {
+        delete m_Window;
+    }
 }
+
