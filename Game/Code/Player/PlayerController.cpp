@@ -2,6 +2,7 @@
 
 namespace Avoidant {
     PlayerController::PlayerController() {
+        LOG("Hello");
     }
 
     PlayerController::~PlayerController() {

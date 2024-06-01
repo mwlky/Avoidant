@@ -6,6 +6,10 @@ set(CMAKE_CXX_STANDARD 20)
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 
+if(CMAKE_BUILD_TYPE MATCHES Debug)
+    add_compile_definitions(DEBUG)
+endif ()
+
 add_library(Engine STATIC
         Code/Engine.cpp
         Code/Engine.h
@@ -14,7 +18,8 @@ add_library(Engine STATIC
         Code/Utilities/SpriteLoader.cpp
         Code/Utilities/SpriteLoader.h
         Code/Math/Vector2.cpp
-        Code/Math/Vector2.h)
+        Code/Math/Vector2.h
+        Code/Utilities/Macros.h)
 
 target_link_libraries(Engine PUBLIC SDL2::SDL2 SDL2_image)
 

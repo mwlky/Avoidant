@@ -1,8 +1,8 @@
 #pragma once
 
-#include <iostream>
 #include "SDL_image.h"
 #include "../Window/Window.h"
+#include <Code/Utilities/Macros.h>
 
 namespace Engine{
     class SpriteLoader {

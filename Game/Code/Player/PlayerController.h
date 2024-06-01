@@ -1,6 +1,7 @@
 #include <Code/Engine.h>
 #include <Code/Math/Vector2.h>
 #include <Code/Utilities/SpriteLoader.h>
+#include <Code/Utilities/Macros.h>
 
 #include "PlayerData.h"
 
