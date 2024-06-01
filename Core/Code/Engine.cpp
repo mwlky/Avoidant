@@ -9,5 +9,9 @@ namespace Engine {
     Engine::~Engine() {
         delete m_Window;
     }
+
+    Window* Engine::GetWindow() const {
+        return m_Window;
+    }
 }
 

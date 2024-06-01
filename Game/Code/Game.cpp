@@ -1,6 +1,6 @@
 #include "Game.h"
 
-namespace Application{
+namespace Avoidant{
 
     Game::Game() {
         Configs::WindowSettings settings;
@@ -11,7 +11,7 @@ namespace Application{
     }
 
     void Game::Init() {
-
+        m_PlayerController.Init();
     }
 
     bool Game::IsRunning() const {
@@ -19,10 +19,20 @@ namespace Application{
     }
 
     void Game::Tick() {
-
+        m_PlayerController.Tick();
     }
 
     void Game::Render() {
+
+        if(SDL_RenderClear(Engine::Window::Renderer) != 0){
+            std::cerr << "[Renderer Error] " << SDL_GetError() << std::endl;
+            return;
+        }
+
+        SDL_SetRenderDrawColor(Engine::Window::Renderer, 150, 150, 185, 255);
+        m_PlayerController.Render();
+
+        SDL_RenderPresent(Engine::Window::Renderer);
 
     }
 

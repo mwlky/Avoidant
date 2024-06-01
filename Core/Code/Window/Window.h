@@ -1,4 +1,7 @@
+#pragma once
+
 #include "SDL.h"
+#include <SDL_image.h>
 #include <iostream>
 
 namespace Engine {
@@ -8,12 +11,13 @@ namespace Engine {
         Window(const char* title, int xPos, int yPos, int width, int height);
         ~Window();
 
-        SDL_Renderer* m_Renderer = nullptr;
+        static SDL_Renderer* Renderer;
 
     private:
 
         SDL_Window* m_Window = nullptr;
         SDL_Surface* m_Surface = nullptr;
+        SDL_Renderer* m_Renderer = nullptr;
     };
 }
 
