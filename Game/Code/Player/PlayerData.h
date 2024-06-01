@@ -7,8 +7,10 @@ namespace Avoidant{
      const char* SpritePath = "/home/mwlky/Documents/Code/Avoidant/Game/Assets/Player/adventurer-Sheet.png";
 
      // Sprite size on sheet
-     int xSize = 50;
-     int ySize = 37;
+     const int xSize = 50;
+     const int ySize = 37;
+
+     const int PlayerSpeed = 3;
 
     };
 }
