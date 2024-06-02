@@ -1,6 +1,7 @@
 #include <Code/Engine.h>
 #include "Player/PlayerController.h"
 #include "Data/WindowSettings.h"
+#include "Map/Map.h"
 #include "SDL2/SDL.h"
 
 namespace Avoidant{
@@ -22,6 +23,7 @@ namespace Avoidant{
 
         bool m_IsRunning = false;
 
+        Map m_Map;
         PlayerController m_PlayerController;
 
         Engine::Engine* m_Engine = nullptr;

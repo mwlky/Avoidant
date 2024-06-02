@@ -36,17 +36,27 @@ namespace Avoidant {
         const Uint8 *keystates = SDL_GetKeyboardState(NULL);
 
         // TODO: Remove vertical movement
-        if (keystates[SDL_SCANCODE_W])
+        if (keystates[SDL_SCANCODE_W]){
+
             m_PlayerVelocity.y = -1 * m_Data.PlayerSpeed;
+        }
 
-        else if (keystates[SDL_SCANCODE_S])
+        else if (keystates[SDL_SCANCODE_S]){
+            m_PlayerVelocity.x = 0;
             m_PlayerVelocity.y = 1 * m_Data.PlayerSpeed;
+        }
 
-        else if (keystates[SDL_SCANCODE_D])
+        else if (keystates[SDL_SCANCODE_D]){
+            m_PlayerVelocity.y = 0;
             m_PlayerVelocity.x = 1 * m_Data.PlayerSpeed;
+        }
 
-        else if (keystates[SDL_SCANCODE_A])
+
+        else if (keystates[SDL_SCANCODE_A]){
+            m_PlayerVelocity.y = 0;
             m_PlayerVelocity.x = -1 * m_Data.PlayerSpeed;
+        }
+
 
         else
             m_PlayerVelocity = Vector2().Zero();

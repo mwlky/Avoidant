@@ -21,6 +21,8 @@ file(GLOB Source "Code/*.cpp")
 add_executable(Game "${Source}"
         Code/Player/PlayerController.cpp
         Code/Player/PlayerController.h
-        Code/Player/PlayerData.h)
+        Code/Player/PlayerData.h
+        Code/Map/Map.cpp
+        Code/Map/Map.h)
 
 target_link_libraries(Game PUBLIC Engine ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})

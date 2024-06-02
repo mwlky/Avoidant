@@ -11,6 +11,7 @@ namespace Avoidant{
     }
 
     void Game::Init() {
+        m_Map.InitBackground();
         m_PlayerController.Init();
     }
 
@@ -32,6 +33,7 @@ namespace Avoidant{
         }
 
         SDL_SetRenderDrawColor(Engine::Window::Renderer, 150, 150, 185, 255);
+        m_Map.Draw();
         m_PlayerController.Render();
 
         SDL_RenderPresent(Engine::Window::Renderer);

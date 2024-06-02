@@ -45,6 +45,14 @@ namespace Engine {
 //            std::cerr << "No texture find to draw" << std::endl;
 
     }
+
+    void SpriteLoader::Draw(SDL_Texture *texture) {
+        if(texture != nullptr)
+            SDL_RenderCopy(Window::Renderer, texture, NULL, NULL);
+
+        else
+            LOG_ERROR("No found texture to draw");
+    }
 }
 
 
