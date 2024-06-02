@@ -1,3 +1,5 @@
+#pragma once
+
 namespace Avoidant{
 
     struct MapSettings{

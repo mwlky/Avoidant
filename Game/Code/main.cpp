@@ -14,8 +14,8 @@ int main() {
         frameStart = SDL_GetTicks();
 
         game.HandleEvents();
-        game.Render();
         game.Tick();
+        game.Render();
 
         frameTime = SDL_GetTicks() - frameStart;
         if(frameDelay > frameTime)

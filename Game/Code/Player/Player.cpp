@@ -1,7 +1,8 @@
 #include "Player.h"
 
 namespace Avoidant {
-    Player::Player() {
+    Player::Player(const Map &map) : m_Map(map) {
+
     }
 
     Player::~Player() {
@@ -14,15 +15,18 @@ namespace Avoidant {
 
     void Player::Tick() {
         CheckInput();
-
-
         UpdatePlayerPosition();
     }
 
     void Player::UpdatePlayerPosition() {
 
-        m_PlayerPosition += m_PlayerVelocity;
+        Engine::Vector2 currentPosition = m_PlayerPosition;
+        Engine::Vector2 newPosition = currentPosition + m_PlayerVelocity;
 
+        if (m_Map.IsColliding(newPosition))
+            return;
+
+        m_PlayerPosition = newPosition;
         m_DestRect.x = m_PlayerPosition.x;
         m_DestRect.y = m_PlayerPosition.y;
     }
@@ -36,29 +40,21 @@ namespace Avoidant {
 
         const Uint8 *keystates = SDL_GetKeyboardState(NULL);
 
-        // TODO: Remove vertical movement
-        if (keystates[SDL_SCANCODE_W]){
+#if DEBUG
+        if (keystates[SDL_SCANCODE_W]) {
 
             m_PlayerVelocity.y = -1 * m_Data.PlayerSpeed;
-        }
-
-        else if (keystates[SDL_SCANCODE_S]){
-            m_PlayerVelocity.x = 0;
+        } else if (keystates[SDL_SCANCODE_S]) {
             m_PlayerVelocity.y = 1 * m_Data.PlayerSpeed;
-        }
-
-        else if (keystates[SDL_SCANCODE_D]){
+        } else
+#endif
+        if (keystates[SDL_SCANCODE_D]) {
             m_PlayerVelocity.y = 0;
             m_PlayerVelocity.x = 1 * m_Data.PlayerSpeed;
-        }
-
-
-        else if (keystates[SDL_SCANCODE_A]){
+        } else if (keystates[SDL_SCANCODE_A]) {
             m_PlayerVelocity.y = 0;
             m_PlayerVelocity.x = -1 * m_Data.PlayerSpeed;
-        }
-
-        else
+        } else
             m_PlayerVelocity = Vector2().Zero();
     }
 

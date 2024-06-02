@@ -15,21 +15,17 @@ namespace Avoidant {
         Engine::SpriteLoader::Draw(tilesSheet, m_Source, m_Destination);
     }
 
-    bool Tile::IsColliding(Engine::Vector2 playerPosition) {
+    bool Tile::IsColliding(Engine::Vector2 playerPosition) const {
         PlayerData playerData;
 
-        float playerLeft = playerPosition.x;
-        float playerRight = playerPosition.x + playerData.xGameSize;
-        float playerTop = playerPosition.y;
-        float playerBottom = playerPosition.y + playerData.yGameSize;
+        int xBox = m_Position.x + m_Destination.h;
+        int yBox = m_Position.y + m_Destination.h;
 
-        float tileLeft = m_Position.x;
-        float tileRight = m_Position.x + m_Destination.w;
-        float tileTop = m_Position.y;
-        float tileBottom = m_Position.y + m_Destination.h;
+        // hard coded value are displacement value of sprite in the whole image. Player sprite is not exactly
+        // at the middle of the sprite
+        bool horizontal = playerPosition.x + playerData.xSize + 40 > m_Position.x && playerPosition.x + 40 < xBox;
+        bool vertical = playerPosition.y + playerData.yGameSize > m_Position.y && playerPosition.y + 15 < yBox;
 
-        return playerRight > tileLeft && playerLeft < tileRight &&
-               playerBottom > tileTop && playerTop < tileBottom;
+        return vertical & horizontal;
     }
-
 }

@@ -1,3 +1,5 @@
+#pragma once
+
 #include <SDL.h>
 #include <Code/Math/Vector2.h>
 #include <Code/Utilities/SpriteLoader.h>
@@ -19,7 +21,7 @@ namespace Avoidant {
     public:
         void Draw(SDL_Texture* tilesSheet);
 
-        bool IsColliding(Engine::Vector2 playerPosition);
+        bool IsColliding(Engine::Vector2 playerPosition) const;
 
     private:
         SDL_Rect m_Source{};

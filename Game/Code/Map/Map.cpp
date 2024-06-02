@@ -59,11 +59,13 @@ namespace Avoidant {
             tile.Draw(m_TilesTexture);
     }
 
-    bool Map::IsColliding(Engine::Vector2 playerPosition) {
+    bool Map::IsColliding(Engine::Vector2 playerPosition) const{
 
-        for (Tile &tile: m_CollisionalTiles)
-            if(tile.IsColliding(playerPosition))
+        for (const Tile& tile : m_CollisionalTiles) {
+            if(tile.IsColliding(playerPosition)){
                 return true;
+            }
+        }
 
         return false;
     }

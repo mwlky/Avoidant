@@ -129,4 +129,8 @@ namespace Engine {
     bool Vector2::operator!=(const Vector2 &vec) {
         return this->x != vec.x || this->y != vec.y;
     }
+
+    bool Vector2::IsZero() {
+        return this->x == 0 & this->y == 0;
+    }
 } // Engine

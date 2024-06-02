@@ -24,6 +24,7 @@ namespace Engine {
         bool operator==(const Vector2& vec);
         bool operator!=(const Vector2& vec);
 
+        bool IsZero();
         static Vector2 Absolute(const Vector2& vec);
         Vector2& operator*(const int& i);
         Vector2& Zero();

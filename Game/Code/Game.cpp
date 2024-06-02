@@ -20,9 +20,6 @@ namespace Avoidant{
     }
 
     void Game::Tick() {
-        bool isColliding = m_Map.IsColliding(m_PlayerController.GetPlayerPosition());
-        LOG(isColliding);
-
         m_PlayerController.Tick();
     }
 
@@ -34,7 +31,6 @@ namespace Avoidant{
             return;
         }
 
-        SDL_SetRenderDrawColor(Engine::Window::Renderer, 150, 150, 185, 255);
         m_Map.Draw();
         m_PlayerController.Render();
 

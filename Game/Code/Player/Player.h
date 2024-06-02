@@ -4,6 +4,7 @@
 #include <Code/Utilities/Macros.h>
 
 #include "PlayerData.h"
+#include "../Map/Map.h"
 
 namespace Avoidant {
 
@@ -12,7 +13,7 @@ namespace Avoidant {
     class Player {
 
     public:
-        Player();
+        Player(const Map& map);
         ~Player();
 
         void Init();
@@ -21,15 +22,14 @@ namespace Avoidant {
 
         Vector2 GetPlayerPosition() const;
 
-    public:
-        bool IsColliding = false;
-
     private:
         void CheckInput();
         void UpdatePlayerPosition();
 
     private:
         PlayerData m_Data;
+
+        const Map& m_Map;
 
         Vector2 m_PlayerPosition {0,0};
         Vector2 m_PlayerVelocity {0 ,0};
