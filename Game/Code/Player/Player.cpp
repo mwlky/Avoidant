@@ -1,24 +1,25 @@
-#include "PlayerController.h"
+#include "Player.h"
 
 namespace Avoidant {
-    PlayerController::PlayerController() {
+    Player::Player() {
     }
 
-    PlayerController::~PlayerController() {
+    Player::~Player() {
         SDL_DestroyTexture(m_PlayerTexture);
     }
 
-    void PlayerController::Init() {
+    void Player::Init() {
         m_PlayerTexture = Engine::SpriteLoader::LoadTexture(m_Data.SpritePath);
     }
 
-    void PlayerController::Tick() {
+    void Player::Tick() {
         CheckInput();
-        UpdatePlayerPosition();
 
+
+        UpdatePlayerPosition();
     }
 
-    void PlayerController::UpdatePlayerPosition() {
+    void Player::UpdatePlayerPosition() {
 
         m_PlayerPosition += m_PlayerVelocity;
 
@@ -26,12 +27,12 @@ namespace Avoidant {
         m_DestRect.y = m_PlayerPosition.y;
     }
 
-    void PlayerController::Render() {
+    void Player::Render() {
 
         SDL_RenderCopy(Engine::Window::Renderer, m_PlayerTexture, &m_SourceRect, &m_DestRect);
     }
 
-    void PlayerController::CheckInput() {
+    void Player::CheckInput() {
 
         const Uint8 *keystates = SDL_GetKeyboardState(NULL);
 
@@ -57,9 +58,12 @@ namespace Avoidant {
             m_PlayerVelocity.x = -1 * m_Data.PlayerSpeed;
         }
 
-
         else
             m_PlayerVelocity = Vector2().Zero();
+    }
+
+    Vector2 Player::GetPlayerPosition() const {
+        return m_PlayerPosition;
     }
 
 

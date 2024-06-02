@@ -21,7 +21,10 @@ namespace Engine {
         Vector2 &operator-=(const Vector2 &vec);
         Vector2 &operator*=(const Vector2 &vec);
         Vector2 &operator/=(const Vector2 &vec);
+        bool operator==(const Vector2& vec);
+        bool operator!=(const Vector2& vec);
 
+        static Vector2 Absolute(const Vector2& vec);
         Vector2& operator*(const int& i);
         Vector2& Zero();
         Vector2& Right();

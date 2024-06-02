@@ -2,6 +2,7 @@
 // Created by mwlky on 6/1/24.
 //
 
+#include <cmath>
 #include "Vector2.h"
 
 namespace Engine {
@@ -115,5 +116,17 @@ namespace Engine {
         this->y = -1;
 
         return *this;
+    }
+
+    Vector2 Vector2::Absolute(const Vector2 &vec) {
+        return Vector2(fabs(vec.x), fabs(vec.y));
+    }
+
+    bool Vector2::operator==(const Vector2 &vec) {
+        return this->x == vec.x && this->y == vec.y;
+    }
+
+    bool Vector2::operator!=(const Vector2 &vec) {
+        return this->x != vec.x || this->y != vec.y;
     }
 } // Engine

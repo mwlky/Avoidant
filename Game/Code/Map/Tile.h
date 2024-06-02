@@ -2,23 +2,30 @@
 #include <Code/Math/Vector2.h>
 #include <Code/Utilities/SpriteLoader.h>
 
+#include "TileData.h"
+#include "../Player/PlayerData.h"
+#include <SDL.h>
+
+
 namespace Avoidant {
 
     class Tile {
 
     public:
-        Tile(SDL_Rect source, SDL_Rect destination, SDL_Texture* texture);
+        Tile(SDL_Rect source, SDL_Rect destination);
 
-        ~Tile();
-        void Draw();
+        ~Tile() = default;
+
+    public:
+        void Draw(SDL_Texture* tilesSheet);
+
+        bool IsColliding(Engine::Vector2 playerPosition);
 
     private:
-        SDL_Texture* m_Texture = nullptr;
+        SDL_Rect m_Source{};
+        SDL_Rect m_Destination{};
 
-        SDL_Rect m_Source;
-        SDL_Rect m_Destination;
-
-        Engine::Vector2 m_Position;
+        Engine::Vector2 m_Position{};
     };
 
 } // Avoidant

@@ -20,13 +20,15 @@ namespace Avoidant{
     }
 
     void Game::Tick() {
+        bool isColliding = m_Map.IsColliding(m_PlayerController.GetPlayerPosition());
+        LOG(isColliding);
+
         m_PlayerController.Tick();
     }
 
     void Game::Render() {
 
         if(SDL_RenderClear(Engine::Window::Renderer) != 0){
-//            std::cerr << "[Renderer Error] " << SDL_GetError() << std::endl;
             LOG_ERROR("[Renderer Error] ")
             LOG_ERROR(SDL_GetError());
             return;

@@ -19,13 +19,14 @@ endif ()
 file(GLOB Source "Code/*.cpp")
 
 add_executable(Game "${Source}"
-        Code/Player/PlayerController.cpp
-        Code/Player/PlayerController.h
+        Code/Player/Player.cpp
+        Code/Player/Player.h
         Code/Player/PlayerData.h
         Code/Map/Map.cpp
         Code/Map/Map.h
         Code/Map/Tile.cpp
         Code/Map/Tile.h
-        Code/Map/MapSettings.h)
+        Code/Map/MapSettings.h
+        Code/Map/TileData.h)
 
 target_link_libraries(Game PUBLIC Engine ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})

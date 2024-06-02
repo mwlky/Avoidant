@@ -9,19 +9,25 @@ namespace Avoidant {
 
     using Engine::Vector2;
 
-    class PlayerController {
+    class Player {
 
     public:
-        PlayerController();
-        ~PlayerController();
+        Player();
+        ~Player();
 
         void Init();
         void Tick();
         void Render();
 
+        Vector2 GetPlayerPosition() const;
+
+    public:
+        bool IsColliding = false;
+
     private:
         void CheckInput();
         void UpdatePlayerPosition();
+
     private:
         PlayerData m_Data;
 
