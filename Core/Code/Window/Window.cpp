@@ -12,7 +12,7 @@ namespace Engine{
 
         m_Window = SDL_CreateWindow(title, xPos, yPos, width, height, SDL_WINDOW_SHOWN);
         if (m_Window) {
-            m_Renderer = SDL_CreateRenderer(m_Window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+            m_Renderer = SDL_CreateRenderer(m_Window, -1, SDL_RENDERER_ACCELERATED);
             m_Surface = SDL_GetWindowSurface(m_Window);
             Renderer = m_Renderer;
 

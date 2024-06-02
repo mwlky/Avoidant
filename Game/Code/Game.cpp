@@ -11,7 +11,7 @@ namespace Avoidant{
     }
 
     void Game::Init() {
-        m_Map.InitBackground();
+        m_Map.Init();
         m_PlayerController.Init();
     }
 
