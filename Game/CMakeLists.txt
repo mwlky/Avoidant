@@ -25,6 +25,7 @@ add_executable(Game "${Source}"
         Code/Map/Map.cpp
         Code/Map/Map.h
         Code/Map/Tile.cpp
-        Code/Map/Tile.h)
+        Code/Map/Tile.h
+        Code/Map/MapSettings.h)
 
 target_link_libraries(Game PUBLIC Engine ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})

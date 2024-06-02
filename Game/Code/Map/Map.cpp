@@ -4,7 +4,7 @@ namespace Avoidant {
 
     void Map::Init() {
         m_TilesTexture = Engine::SpriteLoader::LoadTexture(
-                "/home/mwlky/Documents/Code/Avoidant/Game/Assets/Map/basic.png");
+                "../../Assets/Map/basic.png");
 
         InitBackground();
         InitMapTiles();
@@ -35,24 +35,24 @@ namespace Avoidant {
         for (int x = 0; x < 16; ++x) {
             for (int y = 0; y < 9; ++y) {
 
-                // And this doesn't work?
                 int onSheetX = m_Vectors[y][x].x;
                 int onSheetY = m_Vectors[y][x].y;
 
-                SDL_Rect source{onSheetX * 32, onSheetY * 32, 32, 32};
-                SDL_Rect destination = {x * 80, y * 80, 80, 80};
+                int inSheetTileSize = m_Settings.TileSize;
+                int InGameTileSize = m_Settings.InGameTileSize;
+
+                SDL_Rect source{onSheetX * inSheetTileSize, onSheetY * inSheetTileSize, inSheetTileSize, inSheetTileSize};
+                SDL_Rect destination = {x * InGameTileSize, y * InGameTileSize, InGameTileSize, InGameTileSize};
 
                 Tile tile(source, destination, m_TilesTexture);
                 m_MapTiles.push_back(tile);
-//                LOG(SDL_GetError());
             }
         }
     }
 
     void Map::DrawTiles() {
-        for (Tile &tile: m_MapTiles) {
+        for (Tile &tile: m_MapTiles)
             tile.Draw();
-        }
     }
 }
 
