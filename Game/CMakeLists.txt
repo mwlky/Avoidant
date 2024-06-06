@@ -12,6 +12,9 @@ find_package(SDL2_image REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
 include_directories(${SDL2_IMAGE_INCLUDE_DIRS})
 
+include_directories(${CMAKE_SOURCE_DIR}/Include)
+include_directories(${CMAKE_SOURCE_DIR}/Include/box2d)
+
 if(CMAKE_BUILD_TYPE MATCHES Debug)
     add_compile_definitions(DEBUG)
 endif ()
@@ -30,3 +33,4 @@ add_executable(Game "${Source}"
         Code/Map/TileData.h)
 
 target_link_libraries(Game PUBLIC Engine ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
+target_link_libraries(Game PUBLIC ${CMAKE_SOURCE_DIR}/Include/box2d/libbox2d.a)
