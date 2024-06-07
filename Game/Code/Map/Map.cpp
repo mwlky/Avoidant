@@ -15,25 +15,29 @@ namespace Avoidant {
 
         CreatePlayer();
         m_Player->Init();
+
+        m_DebugDraw = new DebugDraw();
+        m_DebugDraw->SetFlags(b2Draw::e_shapeBit);
+        m_World->SetDebugDraw(m_DebugDraw);
     }
 
     void Map::CreatePlayer() {
         Engine::Vector2 pos;
+        PlayerData data;
 
         b2BodyDef bodyDef;
+        bodyDef.fixedRotation = true;
         bodyDef.type = b2_dynamicBody;
         bodyDef.position.Set(pos.x, pos.y);
         b2Body* playerBody = m_World->CreateBody(&bodyDef);
 
-        PlayerData data;
-
         b2PolygonShape playerDynamicBox;
-        playerDynamicBox.SetAsBox(data.xGameSize / 2, data.yGameSize / 2);
+        playerDynamicBox.SetAsBox(data.xSize / 1.7, data.ySize);
 
         b2FixtureDef fixtureDef;
         fixtureDef.shape = &playerDynamicBox;
         fixtureDef.density = 1.0f;
-        fixtureDef.friction = 0.3f;
+        fixtureDef.friction = 0.f;
 
         b2Fixture* playerFixture = playerBody->CreateFixture(&fixtureDef);
         m_Player = new Player(playerFixture);
@@ -46,12 +50,17 @@ namespace Avoidant {
     Map::~Map() {
         SDL_DestroyTexture(m_BackgroundTexture);
         SDL_DestroyTexture(m_TilesTexture);
+
+        delete m_World;
+        delete m_DebugDraw;
+        delete m_Player;
     }
 
     void Map::Draw() {
         DrawBackground();
         DrawTiles();
         m_Player->Render();
+        m_World->DebugDraw();
     }
 
     void Map::DrawBackground() const {
@@ -81,7 +90,7 @@ namespace Avoidant {
                     m_CollisionalTiles.push_back(tile);
 
                     b2BodyDef tileBodyDef;
-                    tileBodyDef.position.Set(x * InGameTileSize, y * InGameTileSize);
+                    tileBodyDef.position.Set(x * InGameTileSize + (InGameTileSize * 0.5), y * InGameTileSize + (InGameTileSize * 0.5));
 
                     b2Body *tileBody = m_World->CreateBody(&tileBodyDef);
                     b2PolygonShape tileBox;

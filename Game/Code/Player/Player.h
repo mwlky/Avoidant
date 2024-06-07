@@ -23,9 +23,6 @@ namespace Avoidant {
         void Tick();
         void Render();
 
-        Vector2 GetPlayerPosition() const;
-        void SetPlayerPosition(Vector2 a);
-
     private:
         void CheckInput();
         void UpdatePlayerPosition();
@@ -36,7 +33,6 @@ namespace Avoidant {
         PlayerData m_Data;
 
         Vector2 m_PlayerPosition {0,0};
-        Vector2 m_PlayerVelocity {0 ,0};
 
         // Position in sheet file
         SDL_Rect m_SourceRect = {0,0, m_Data.xSize, m_Data.ySize};

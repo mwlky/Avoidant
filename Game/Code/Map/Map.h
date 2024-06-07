@@ -8,6 +8,7 @@
 #include "MapSettings.h"
 #include "TileData.h"
 #include "../Player/Player.h"
+#include "../DebugDraw.h"
 #include <box2d/box2d.h>
 
 namespace Avoidant {
@@ -41,6 +42,7 @@ namespace Avoidant {
 
         b2World* m_World = nullptr;
         Player* m_Player = nullptr;
+        DebugDraw* m_DebugDraw = nullptr;
 
         MapSettings m_Settings;
 

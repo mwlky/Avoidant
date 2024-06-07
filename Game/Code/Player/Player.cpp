@@ -1,7 +1,7 @@
 #include "Player.h"
 
 namespace Avoidant {
-    Player::Player(){
+    Player::Player() {
 
     }
 
@@ -20,8 +20,8 @@ namespace Avoidant {
 
     void Player::UpdatePlayerPosition() {
 
-        m_DestRect.x = m_Body->GetBody()->GetPosition().x;
-        m_DestRect.y = m_Body->GetBody()->GetPosition().y;
+        m_DestRect.x = m_Body->GetBody()->GetPosition().x - m_Data.ySize * 2;
+        m_DestRect.y = m_Body->GetBody()->GetPosition().y - m_Data.xSize - 20;
     }
 
     void Player::Render() {
@@ -32,33 +32,19 @@ namespace Avoidant {
     void Player::CheckInput() {
 
         const Uint8 *keystates = SDL_GetKeyboardState(NULL);
+        b2Vec2 currentVelocity = m_Body->GetBody()->GetLinearVelocity();
+        float desiredX = 0;
 
-#if DEBUG
-        if (keystates[SDL_SCANCODE_W]) {
+        if (keystates[SDL_SCANCODE_D])
+            desiredX = m_Data.PlayerSpeed;
 
-            m_PlayerVelocity.y = -1 * m_Data.PlayerSpeed;
-        } else if (keystates[SDL_SCANCODE_S]) {
-            m_PlayerVelocity.y = 1 * m_Data.PlayerSpeed;
-        } else
-#endif
-        if (keystates[SDL_SCANCODE_D]) {
-//            m_PlayerVelocity.y = 0;
-//            m_PlayerVelocity.x = 1 * m_Data.PlayerSpeed;
-            m_Body->GetBody()->SetLinearVelocity(b2Vec2(1 * m_Data.PlayerSpeed, 0));
+        else if (keystates[SDL_SCANCODE_A])
+            desiredX = -m_Data.PlayerSpeed;
 
-        } else if (keystates[SDL_SCANCODE_A]) {
-            m_PlayerVelocity.y = 0;
-            m_PlayerVelocity.x = -1 * m_Data.PlayerSpeed;
-        } else
-            m_PlayerVelocity = Vector2().Zero();
-    }
+        float velChange = desiredX - currentVelocity.x;
+        float impule = m_Body->GetBody()->GetMass() * velChange;
+        m_Body->GetBody()->ApplyLinearImpulse(b2Vec2(impule, 0), m_Body->GetBody()->GetWorldCenter(), true);
 
-    Vector2 Player::GetPlayerPosition() const {
-        return m_PlayerPosition;
-    }
-
-    void Player::SetPlayerPosition(Vector2 a) {
-        m_PlayerPosition = a;
     }
 
     Player::Player(b2Fixture *body) {
