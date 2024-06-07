@@ -30,7 +30,9 @@ add_executable(Game "${Source}"
         Code/Map/Tile.cpp
         Code/Map/Tile.h
         Code/Map/MapSettings.h
-        Code/Map/TileData.h)
+        Code/Map/TileData.h
+        Code/DebugDraw.cpp
+        Code/DebugDraw.h)
 
 target_link_libraries(Game PUBLIC Engine ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
 target_link_libraries(Game PUBLIC ${CMAKE_SOURCE_DIR}/Include/box2d/libbox2d.a)
