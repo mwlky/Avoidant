@@ -12,7 +12,6 @@ namespace Avoidant{
 
     void Game::Init() {
         m_Map.Init();
-        m_PlayerController.Init();
     }
 
     bool Game::IsRunning() const {
@@ -20,7 +19,7 @@ namespace Avoidant{
     }
 
     void Game::Tick() {
-        m_PlayerController.Tick();
+        m_Map.Tick();
     }
 
     void Game::Render() {
@@ -32,10 +31,8 @@ namespace Avoidant{
         }
 
         m_Map.Draw();
-        m_PlayerController.Render();
 
         SDL_RenderPresent(Engine::Window::Renderer);
-
     }
 
     void Game::HandleEvents() {

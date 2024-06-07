@@ -24,7 +24,6 @@ namespace Avoidant{
         bool m_IsRunning = false;
 
         Map m_Map;
-        Player m_PlayerController{m_Map};
 
         Engine::Engine* m_Engine = nullptr;
         SDL_Event m_Event;

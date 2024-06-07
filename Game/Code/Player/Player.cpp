@@ -1,7 +1,7 @@
 #include "Player.h"
 
 namespace Avoidant {
-    Player::Player(const Map &map) : m_Map(map) {
+    Player::Player(){
 
     }
 
@@ -20,15 +20,8 @@ namespace Avoidant {
 
     void Player::UpdatePlayerPosition() {
 
-        Engine::Vector2 currentPosition = m_PlayerPosition;
-        Engine::Vector2 newPosition = currentPosition + m_PlayerVelocity;
-
-        if (m_Map.IsColliding(newPosition))
-            return;
-
-        m_PlayerPosition = newPosition;
-        m_DestRect.x = m_PlayerPosition.x;
-        m_DestRect.y = m_PlayerPosition.y;
+        m_DestRect.x = m_Body->GetBody()->GetPosition().x;
+        m_DestRect.y = m_Body->GetBody()->GetPosition().y;
     }
 
     void Player::Render() {
@@ -49,8 +42,10 @@ namespace Avoidant {
         } else
 #endif
         if (keystates[SDL_SCANCODE_D]) {
-            m_PlayerVelocity.y = 0;
-            m_PlayerVelocity.x = 1 * m_Data.PlayerSpeed;
+//            m_PlayerVelocity.y = 0;
+//            m_PlayerVelocity.x = 1 * m_Data.PlayerSpeed;
+            m_Body->GetBody()->SetLinearVelocity(b2Vec2(1 * m_Data.PlayerSpeed, 0));
+
         } else if (keystates[SDL_SCANCODE_A]) {
             m_PlayerVelocity.y = 0;
             m_PlayerVelocity.x = -1 * m_Data.PlayerSpeed;
@@ -60,6 +55,14 @@ namespace Avoidant {
 
     Vector2 Player::GetPlayerPosition() const {
         return m_PlayerPosition;
+    }
+
+    void Player::SetPlayerPosition(Vector2 a) {
+        m_PlayerPosition = a;
+    }
+
+    Player::Player(b2Fixture *body) {
+        m_Body = body;
     }
 
 

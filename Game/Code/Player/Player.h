@@ -1,10 +1,12 @@
+#pragma once
+
 #include <Code/Engine.h>
 #include <Code/Math/Vector2.h>
 #include <Code/Utilities/SpriteLoader.h>
 #include <Code/Utilities/Macros.h>
+#include <box2d/box2d.h>
 
 #include "PlayerData.h"
-#include "../Map/Map.h"
 
 namespace Avoidant {
 
@@ -13,7 +15,8 @@ namespace Avoidant {
     class Player {
 
     public:
-        Player(const Map& map);
+        Player();
+        Player(b2Fixture* body);
         ~Player();
 
         void Init();
@@ -21,15 +24,16 @@ namespace Avoidant {
         void Render();
 
         Vector2 GetPlayerPosition() const;
+        void SetPlayerPosition(Vector2 a);
 
     private:
         void CheckInput();
         void UpdatePlayerPosition();
 
     private:
-        PlayerData m_Data;
+        b2Fixture* m_Body = nullptr;
 
-        const Map& m_Map;
+        PlayerData m_Data;
 
         Vector2 m_PlayerPosition {0,0};
         Vector2 m_PlayerVelocity {0 ,0};

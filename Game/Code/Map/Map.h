@@ -7,6 +7,8 @@
 #include <vector>
 #include "MapSettings.h"
 #include "TileData.h"
+#include "../Player/Player.h"
+#include <box2d/box2d.h>
 
 namespace Avoidant {
 
@@ -18,16 +20,14 @@ namespace Avoidant {
         ~Map();
 
         void Init();
-
         void Draw();
+        void Tick();
 
         bool IsColliding(Engine::Vector2 playerPosition) const;
 
     private:
         void InitBackground();
-
         void InitMapTiles();
-
         void DrawTiles();
 
         void DrawBackground() const;
@@ -38,6 +38,9 @@ namespace Avoidant {
 
         std::vector<Tile> m_TilesToDraw{};
         std::vector<Tile> m_CollisionalTiles{};
+
+        b2World* m_World = nullptr;
+        Player* m_Player = nullptr;
 
         MapSettings m_Settings;
 
@@ -67,6 +70,7 @@ namespace Avoidant {
 //                {{0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}},
 //        };
 
+        void CreatePlayer();
     };
 }
 
