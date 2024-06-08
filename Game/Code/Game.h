@@ -13,7 +13,7 @@ namespace Avoidant{
         ~Game();
 
         void Init();
-        void Tick();
+        void Tick(double deltaTime);
         void Render();
         void HandleEvents();
 

@@ -39,8 +39,12 @@ namespace Avoidant {
             desiredX = m_Data.PlayerSpeed;
         else if (keystates[SDL_SCANCODE_A])
             desiredX = -m_Data.PlayerSpeed;
-        else
-            desiredX = 0;
+
+        if (keystates[SDL_SCANCODE_SPACE]) {
+            float impulse = m_Body->GetBody()->GetMass() * 100000;
+            m_Body->GetBody()->ApplyLinearImpulseToCenter(b2Vec2(0, impulse), false);
+        }
+
 
         float velChangeX = desiredX - currentVelocity.x;
         float impulseX = m_Body->GetBody()->GetMass() * velChangeX;

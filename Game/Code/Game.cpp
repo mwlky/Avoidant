@@ -18,8 +18,8 @@ namespace Avoidant{
         return m_IsRunning;
     }
 
-    void Game::Tick() {
-        m_Map.Tick();
+    void Game::Tick(double deltaTime) {
+        m_Map.Tick(deltaTime);
     }
 
     void Game::Render() {

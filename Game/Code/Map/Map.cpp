@@ -2,12 +2,22 @@
 
 namespace Avoidant {
 
+    Map::~Map() {
+        SDL_DestroyTexture(m_BackgroundTexture);
+        SDL_DestroyTexture(m_TilesTexture);
+
+        delete m_World;
+#if DEBUG
+        delete m_DebugDraw;
+#endif
+        delete m_Player;
+    }
+
     void Map::Init() {
         m_TilesTexture = Engine::SpriteLoader::LoadTexture(
                 "../../Assets/Map/basic.png");
 
         b2Vec2 gravity(m_Settings.Gravity.x, m_Settings.Gravity.y);
-
         m_World = new b2World(gravity);
 
         InitBackground();
@@ -32,15 +42,14 @@ namespace Avoidant {
         bodyDef.type = b2_dynamicBody;
         bodyDef.position.Set(pos.x, pos.y);
         b2Body* playerBody = m_World->CreateBody(&bodyDef);
-        playerBody->SetLinearDamping(-55);
 
         b2PolygonShape playerDynamicBox;
         playerDynamicBox.SetAsBox(data.xSize / 1.7, data.ySize);
 
         b2FixtureDef fixtureDef;
         fixtureDef.shape = &playerDynamicBox;
-        fixtureDef.density = 1.f;
-        fixtureDef.friction = 0.f;
+        fixtureDef.density = 1.0f;
+        fixtureDef.friction = 0.3f;
 
         b2Fixture* playerFixture = playerBody->CreateFixture(&fixtureDef);
         m_Player = new Player(playerFixture);
@@ -48,17 +57,6 @@ namespace Avoidant {
 
     void Map::InitBackground() {
         m_BackgroundTexture = Engine::SpriteLoader::LoadTexture("../../Assets/Map/windrise-background-cut.png");
-    }
-
-    Map::~Map() {
-        SDL_DestroyTexture(m_BackgroundTexture);
-        SDL_DestroyTexture(m_TilesTexture);
-
-        delete m_World;
-#if DEBUG
-        delete m_DebugDraw;
-#endif
-        delete m_Player;
     }
 
     void Map::Draw() {
@@ -94,18 +92,19 @@ namespace Avoidant {
                 m_TilesToDraw.push_back(tile);
 
                 if (data.HasCollision) {
-                    m_CollisionalTiles.push_back(tile);
-
                     b2BodyDef tileBodyDef;
                     tileBodyDef.position.Set(x * InGameTileSize + (InGameTileSize * 0.5), y * InGameTileSize + (InGameTileSize * 0.5));
 
                     b2Body *tileBody = m_World->CreateBody(&tileBodyDef);
                     b2PolygonShape tileBox;
+
+//                    b2FixtureDef fixtureDef;
+//                    fixtureDef.shape = &tileBox;
+//                    fixtureDef.restitution = 0.0f;
+
                     tileBox.SetAsBox(InGameTileSize / 2, InGameTileSize / 2);
-                    tileBody->CreateFixture(&tileBox, 0);
+                    tileBody->CreateFixture(&tileBox, 0.0f);
                 }
-
-
             }
         }
     }
@@ -115,19 +114,8 @@ namespace Avoidant {
             tile.Draw(m_TilesTexture);
     }
 
-    bool Map::IsColliding(Engine::Vector2 playerPosition) const {
-
-        for (const Tile &tile: m_CollisionalTiles) {
-            if (tile.IsColliding(playerPosition)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    void Map::Tick() {
-        m_World->Step(1.0f / 60.0f, 10, 10);
+    void Map::Tick(double deltaTime) {
+        m_World->Step(deltaTime, 8, 10);
 
         m_Player->Tick();
     }
