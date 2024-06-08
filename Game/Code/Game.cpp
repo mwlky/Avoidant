@@ -3,7 +3,7 @@
 namespace Avoidant{
 
     Game::Game() {
-        Configs::WindowSettings settings;
+        Settings settings;
         m_Engine = new Engine::Engine;
 
         m_Engine->OpenWindow(settings.WindowName, settings.XPosition, settings.YPosition, settings.Width, settings.Height);

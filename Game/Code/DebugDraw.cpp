@@ -1,6 +1,6 @@
 #include "DebugDraw.h"
 
-const float SCALE = 1;
+const float SCALE = 100;
 
 void DebugDraw::DrawPolygon(const b2Vec2 *vertices, int32 vertexCount, const b2Color &color) {
     SDL_SetRenderDrawColor(Engine::Window::Renderer, color.r * 255, color.g * 255, color.b * 255, 255);

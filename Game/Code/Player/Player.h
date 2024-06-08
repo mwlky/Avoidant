@@ -6,7 +6,7 @@
 #include <Code/Utilities/Macros.h>
 #include <box2d/box2d.h>
 
-#include "PlayerData.h"
+#include "../Settings.h"
 
 namespace Avoidant {
 
@@ -30,7 +30,7 @@ namespace Avoidant {
         b2Fixture* m_Body = nullptr;
         SDL_Texture* m_PlayerTexture = nullptr;
 
-        PlayerData m_Data;
+        Settings m_Data;
 
         // Position in sheet file
         SDL_Rect m_SourceRect = {0,0, m_Data.xSize, m_Data.ySize};

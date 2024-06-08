@@ -1,6 +1,5 @@
 #include <Code/Engine.h>
 #include "Player/Player.h"
-#include "Data/WindowSettings.h"
 #include "Map/Map.h"
 #include "SDL2/SDL.h"
 

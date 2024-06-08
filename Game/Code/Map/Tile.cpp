@@ -16,7 +16,7 @@ namespace Avoidant {
     }
 
     bool Tile::IsColliding(Engine::Vector2 playerPosition) const {
-        PlayerData playerData;
+        Settings playerData;
 
 //        int xBox = m_Position.x + m_Destination.h;
 //        int yBox = m_Position.y + m_Destination.h;

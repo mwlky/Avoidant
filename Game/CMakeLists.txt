@@ -24,12 +24,11 @@ file(GLOB Source "Code/*.cpp")
 add_executable(Game "${Source}"
         Code/Player/Player.cpp
         Code/Player/Player.h
-        Code/Player/PlayerData.h
+        Code/Settings.h
         Code/Map/Map.cpp
         Code/Map/Map.h
         Code/Map/Tile.cpp
         Code/Map/Tile.h
-        Code/Map/MapSettings.h
         Code/Map/TileData.h
         Code/DebugDraw.cpp
         Code/DebugDraw.h)

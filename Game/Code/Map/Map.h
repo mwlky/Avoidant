@@ -5,7 +5,6 @@
 #include "Tile.h"
 #include <iostream>
 #include <vector>
-#include "MapSettings.h"
 #include "TileData.h"
 #include "../Player/Player.h"
 #include "../DebugDraw.h"
@@ -40,8 +39,6 @@ namespace Avoidant {
         b2World* m_World = nullptr;
         Player* m_Player = nullptr;
         DebugDraw* m_DebugDraw = nullptr;
-
-        MapSettings m_Settings;
 
 //      Vector coordinates coresponds to cordinates on sheet
         TileData m_Tiles [9][16] {

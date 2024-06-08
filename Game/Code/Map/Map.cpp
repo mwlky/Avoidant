@@ -17,7 +17,9 @@ namespace Avoidant {
         m_TilesTexture = Engine::SpriteLoader::LoadTexture(
                 "../../Assets/Map/basic.png");
 
-        b2Vec2 gravity(m_Settings.Gravity.x, m_Settings.Gravity.y);
+        Settings settings;
+
+        b2Vec2 gravity(settings.Gravity.x, settings.Gravity.y);
         m_World = new b2World(gravity);
 
         InitBackground();
@@ -35,7 +37,7 @@ namespace Avoidant {
 
     void Map::CreatePlayer() {
         Engine::Vector2 pos;
-        PlayerData data;
+        Settings data;
 
         b2BodyDef bodyDef;
         bodyDef.fixedRotation = true;
@@ -44,7 +46,7 @@ namespace Avoidant {
         b2Body* playerBody = m_World->CreateBody(&bodyDef);
 
         b2PolygonShape playerDynamicBox;
-        playerDynamicBox.SetAsBox(data.xSize / 1.7, data.ySize);
+        playerDynamicBox.SetAsBox(data.xSize * data.ScalingFactor / 1.7, data.ySize * data.ScalingFactor);
 
         b2FixtureDef fixtureDef;
         fixtureDef.shape = &playerDynamicBox;
@@ -74,6 +76,8 @@ namespace Avoidant {
 
     void Map::InitMapTiles() {
 
+        Settings settings;
+
         for (int x = 0; x < 16; ++x) {
             for (int y = 0; y < 9; ++y) {
 
@@ -81,8 +85,8 @@ namespace Avoidant {
                 int onSheetX = data.SheetX;
                 int onSheetY = data.SheetY;
 
-                int inSheetTileSize = m_Settings.TileSize;
-                int InGameTileSize = m_Settings.InGameTileSize;
+                int inSheetTileSize = settings.TileSize;
+                int InGameTileSize = settings.InGameTileSize;
 
                 SDL_Rect source{onSheetX * inSheetTileSize, onSheetY * inSheetTileSize, inSheetTileSize,
                                 inSheetTileSize};
@@ -93,16 +97,13 @@ namespace Avoidant {
 
                 if (data.HasCollision) {
                     b2BodyDef tileBodyDef;
-                    tileBodyDef.position.Set(x * InGameTileSize + (InGameTileSize * 0.5), y * InGameTileSize + (InGameTileSize * 0.5));
+                    tileBodyDef.position.Set((x * InGameTileSize + (InGameTileSize * 0.5f)) * settings.ScalingFactor,
+                                             (y * InGameTileSize + (InGameTileSize * 0.5f)) * settings.ScalingFactor);
 
                     b2Body *tileBody = m_World->CreateBody(&tileBodyDef);
                     b2PolygonShape tileBox;
 
-//                    b2FixtureDef fixtureDef;
-//                    fixtureDef.shape = &tileBox;
-//                    fixtureDef.restitution = 0.0f;
-
-                    tileBox.SetAsBox(InGameTileSize / 2, InGameTileSize / 2);
+                    tileBox.SetAsBox((InGameTileSize * 0.5f) * settings.ScalingFactor, (InGameTileSize * 0.5f) * settings.ScalingFactor);
                     tileBody->CreateFixture(&tileBox, 0.0f);
                 }
             }
@@ -115,9 +116,9 @@ namespace Avoidant {
     }
 
     void Map::Tick(double deltaTime) {
-        m_World->Step(deltaTime, 8, 10);
-
         m_Player->Tick();
+
+        m_World->Step(deltaTime, 3, 3);
     }
 
 }

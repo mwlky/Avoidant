@@ -5,7 +5,7 @@
 #include <Code/Utilities/SpriteLoader.h>
 
 #include "TileData.h"
-#include "../Player/PlayerData.h"
+#include "../Settings.h"
 #include <SDL.h>
 
 

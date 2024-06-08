@@ -19,9 +19,13 @@ namespace Avoidant {
     }
 
     void Player::UpdatePlayerPosition() {
+        Settings settings;
 
-        m_DestRect.x = m_Body->GetBody()->GetPosition().x - m_Data.ySize * 2;
-        m_DestRect.y = m_Body->GetBody()->GetPosition().y - m_Data.xSize - 20;
+        float newPosX = m_Body->GetBody()->GetPosition().x / settings.ScalingFactor;
+        float newPosY = m_Body->GetBody()->GetPosition().y / settings.ScalingFactor;
+
+        m_DestRect.x = newPosX - m_Data.xGameSize * 0.5f;
+        m_DestRect.y = newPosY - m_Data.yGameSize * 0.5f - 14;
     }
 
     void Player::Render() {
@@ -35,15 +39,17 @@ namespace Avoidant {
         b2Vec2 currentVelocity = m_Body->GetBody()->GetLinearVelocity();
         float desiredX = 0;
 
-        if (keystates[SDL_SCANCODE_D])
-            desiredX = m_Data.PlayerSpeed;
-        else if (keystates[SDL_SCANCODE_A])
-            desiredX = -m_Data.PlayerSpeed;
+        Settings settings;
 
-        if (keystates[SDL_SCANCODE_SPACE]) {
-            float impulse = m_Body->GetBody()->GetMass() * 100000;
-            m_Body->GetBody()->ApplyLinearImpulseToCenter(b2Vec2(0, impulse), false);
-        }
+        if (keystates[SDL_SCANCODE_D])
+            desiredX = m_Data.PlayerSpeed * settings.ScalingFactor;
+        else if (keystates[SDL_SCANCODE_A])
+            desiredX = -m_Data.PlayerSpeed * settings.ScalingFactor;
+//
+//        if (keystates[SDL_SCANCODE_SPACE]) {
+//            float impulse = m_Body->GetBody()->GetMass() * 100000;
+//            m_Body->GetBody()->ApplyLinearImpulseToCenter(b2Vec2(0, impulse), false);
+//        }
 
 
         float velChangeX = desiredX - currentVelocity.x;
