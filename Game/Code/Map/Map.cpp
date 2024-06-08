@@ -16,9 +16,11 @@ namespace Avoidant {
         CreatePlayer();
         m_Player->Init();
 
+#if DEBUG
         m_DebugDraw = new DebugDraw();
         m_DebugDraw->SetFlags(b2Draw::e_shapeBit);
         m_World->SetDebugDraw(m_DebugDraw);
+#endif
     }
 
     void Map::CreatePlayer() {
@@ -30,13 +32,14 @@ namespace Avoidant {
         bodyDef.type = b2_dynamicBody;
         bodyDef.position.Set(pos.x, pos.y);
         b2Body* playerBody = m_World->CreateBody(&bodyDef);
+        playerBody->SetLinearDamping(-55);
 
         b2PolygonShape playerDynamicBox;
         playerDynamicBox.SetAsBox(data.xSize / 1.7, data.ySize);
 
         b2FixtureDef fixtureDef;
         fixtureDef.shape = &playerDynamicBox;
-        fixtureDef.density = 1.0f;
+        fixtureDef.density = 1.f;
         fixtureDef.friction = 0.f;
 
         b2Fixture* playerFixture = playerBody->CreateFixture(&fixtureDef);
@@ -52,7 +55,9 @@ namespace Avoidant {
         SDL_DestroyTexture(m_TilesTexture);
 
         delete m_World;
+#if DEBUG
         delete m_DebugDraw;
+#endif
         delete m_Player;
     }
 
@@ -60,7 +65,9 @@ namespace Avoidant {
         DrawBackground();
         DrawTiles();
         m_Player->Render();
+#if DEBUG
         m_World->DebugDraw();
+#endif
     }
 
     void Map::DrawBackground() const {
@@ -120,7 +127,7 @@ namespace Avoidant {
     }
 
     void Map::Tick() {
-        m_World->Step(1.0f / 60.0f, 1, 1);
+        m_World->Step(1.0f / 60.0f, 10, 10);
 
         m_Player->Tick();
     }

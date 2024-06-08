@@ -13,6 +13,7 @@ namespace Avoidant{
      const int xGameSize = xSize * 3;
      const int yGameSize = ySize * 3;
 
-     const int PlayerSpeed = 500;
+     const int PlayerSpeed = 100;
+     const int JumpSpeed = 30000;
     };
 }

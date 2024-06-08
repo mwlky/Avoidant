@@ -15,7 +15,6 @@ namespace Avoidant {
     class Player {
 
     public:
-        Player();
         Player(b2Fixture* body);
         ~Player();
 
@@ -29,18 +28,16 @@ namespace Avoidant {
 
     private:
         b2Fixture* m_Body = nullptr;
+        SDL_Texture* m_PlayerTexture = nullptr;
 
         PlayerData m_Data;
 
-        Vector2 m_PlayerPosition {0,0};
-
         // Position in sheet file
         SDL_Rect m_SourceRect = {0,0, m_Data.xSize, m_Data.ySize};
-
         // In game position
         SDL_Rect m_DestRect = {0,0, m_Data.xSize * 3,m_Data.ySize * 3};
 
-        SDL_Texture* m_PlayerTexture = nullptr;
+
     };
 
 } // Avoidant

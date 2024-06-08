@@ -1,8 +1,8 @@
 #include "Player.h"
 
 namespace Avoidant {
-    Player::Player() {
-
+    Player::Player(b2Fixture *body) {
+        m_Body = body;
     }
 
     Player::~Player() {
@@ -37,19 +37,14 @@ namespace Avoidant {
 
         if (keystates[SDL_SCANCODE_D])
             desiredX = m_Data.PlayerSpeed;
-
         else if (keystates[SDL_SCANCODE_A])
             desiredX = -m_Data.PlayerSpeed;
+        else
+            desiredX = 0;
 
-        float velChange = desiredX - currentVelocity.x;
-        float impule = m_Body->GetBody()->GetMass() * velChange;
-        m_Body->GetBody()->ApplyLinearImpulse(b2Vec2(impule, 0), m_Body->GetBody()->GetWorldCenter(), true);
+        float velChangeX = desiredX - currentVelocity.x;
+        float impulseX = m_Body->GetBody()->GetMass() * velChangeX;
 
+        m_Body->GetBody()->ApplyLinearImpulseToCenter(b2Vec2(impulseX, 0), true);
     }
-
-    Player::Player(b2Fixture *body) {
-        m_Body = body;
-    }
-
-
 } // Avoidant
