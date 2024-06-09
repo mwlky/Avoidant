@@ -46,15 +46,31 @@ namespace Avoidant {
         b2Body* playerBody = m_World->CreateBody(&bodyDef);
 
         b2PolygonShape playerDynamicBox;
-        playerDynamicBox.SetAsBox(data.xSize * data.ScalingFactor / 1.7, data.ySize * data.ScalingFactor);
+        playerDynamicBox.SetAsBox(data.xSize * data.ScalingFactor / 2, data.ySize * data.ScalingFactor);
+
+        b2CircleShape playerCircleTop;
+        playerCircleTop.m_radius = data.xSize * data.ScalingFactor / 2;
+        playerCircleTop.m_p.Set(0, data.ySize * data.ScalingFactor / 2);
+
+        b2CircleShape playerCircleBottom;
+        playerCircleBottom.m_radius = data.xSize * data.ScalingFactor / 2;
+        playerCircleBottom.m_p.Set(0, -data.ySize * data.ScalingFactor / 2);
 
         b2FixtureDef fixtureDef;
         fixtureDef.shape = &playerDynamicBox;
         fixtureDef.density = 1.0f;
-        fixtureDef.friction = 0.3f;
+        fixtureDef.friction = 0.0f;
 
-        b2Fixture* playerFixture = playerBody->CreateFixture(&fixtureDef);
-        m_Player = new Player(playerFixture);
+        playerBody->CreateFixture(&fixtureDef);
+
+        fixtureDef.shape = &playerCircleTop;
+        playerBody->CreateFixture(&fixtureDef);
+
+        fixtureDef.shape = &playerCircleBottom;
+        playerBody->CreateFixture(&fixtureDef);
+
+
+        m_Player = new Player(playerBody->GetFixtureList());
     }
 
     void Map::InitBackground() {
@@ -103,7 +119,7 @@ namespace Avoidant {
                     b2Body *tileBody = m_World->CreateBody(&tileBodyDef);
                     b2PolygonShape tileBox;
 
-                    tileBox.SetAsBox((InGameTileSize * 0.5f) * settings.ScalingFactor, (InGameTileSize * 0.5f) * settings.ScalingFactor);
+                    tileBox.SetAsBox((InGameTileSize * 0.5) * settings.ScalingFactor, (InGameTileSize * 0.5f) * settings.ScalingFactor);
                     tileBody->CreateFixture(&tileBox, 0.0f);
                 }
             }
@@ -118,7 +134,7 @@ namespace Avoidant {
     void Map::Tick(double deltaTime) {
         m_Player->Tick();
 
-        m_World->Step(deltaTime, 3, 3);
+        m_World->Step(deltaTime, 6, 8);
     }
 
 }

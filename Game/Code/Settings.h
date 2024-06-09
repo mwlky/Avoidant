@@ -24,12 +24,12 @@ namespace Avoidant {
         const int xGameSize = xSize * 3;
         const int yGameSize = ySize * 3;
 
-        const int PlayerSpeed = 100;
+        const int PlayerSpeed = 200;
         const int JumpSpeed = 300;
 
         // ====================== Map Settings =======================================
-        int InGameTileSize = 80;
-        int TileSize = 32;
+        const int InGameTileSize = 80;
+        const int TileSize = 32;
 
         Engine::Vector2 Gravity{0.f, 9.81f};
 

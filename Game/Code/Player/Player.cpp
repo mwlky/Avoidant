@@ -25,7 +25,9 @@ namespace Avoidant {
         float newPosY = m_Body->GetBody()->GetPosition().y / settings.ScalingFactor;
 
         m_DestRect.x = newPosX - m_Data.xGameSize * 0.5f;
-        m_DestRect.y = newPosY - m_Data.yGameSize * 0.5f - 14;
+
+        // Move sprite upward to fit into collider
+        m_DestRect.y = newPosY - m_Data.yGameSize * 0.5f - 5;
     }
 
     void Player::Render() {
@@ -36,7 +38,6 @@ namespace Avoidant {
     void Player::CheckInput() {
 
         const Uint8 *keystates = SDL_GetKeyboardState(NULL);
-        b2Vec2 currentVelocity = m_Body->GetBody()->GetLinearVelocity();
         float desiredX = 0;
 
         Settings settings;
@@ -45,12 +46,8 @@ namespace Avoidant {
             desiredX = m_Data.PlayerSpeed * settings.ScalingFactor;
         else if (keystates[SDL_SCANCODE_A])
             desiredX = -m_Data.PlayerSpeed * settings.ScalingFactor;
-//
-//        if (keystates[SDL_SCANCODE_SPACE]) {
-//            float impulse = m_Body->GetBody()->GetMass() * 100000;
-//            m_Body->GetBody()->ApplyLinearImpulseToCenter(b2Vec2(0, impulse), false);
-//        }
 
+        b2Vec2 currentVelocity = m_Body->GetBody()->GetLinearVelocity();
 
         float velChangeX = desiredX - currentVelocity.x;
         float impulseX = m_Body->GetBody()->GetMass() * velChangeX;
