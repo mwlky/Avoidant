@@ -15,6 +15,7 @@ namespace Avoidant {
 
         // ================ Player settings= ====================================
         const char *SpritePath = "../../Assets/Player/adventurer-Sheet.png";
+        const Engine::Vector2 StartPosition {5.5f,3.4f};
 
         // Sprite size on sheet
         const int xSize = 50;
@@ -31,7 +32,7 @@ namespace Avoidant {
         const int InGameTileSize = 80;
         const int TileSize = 32;
 
-        Engine::Vector2 Gravity{0.f, 9.81f};
+        Engine::Vector2 Gravity {0.f, 9.81f};
 
         // ======================= Physics Settings ======================================
         const float ScalingFactor = 0.01f;

@@ -47,6 +47,13 @@ namespace Avoidant {
         else if (keystates[SDL_SCANCODE_A])
             desiredX = -m_Data.PlayerSpeed * settings.ScalingFactor;
 
+        if(keystates[SDL_SCANCODE_SPACE]){
+            float force = m_Body->GetBody()->GetMass() * 10 / (1/60.0);
+
+            m_Body->GetBody()->ApplyForceToCenter(b2Vec2(0, force), true);
+            LOG("Jump");
+        }
+
         b2Vec2 currentVelocity = m_Body->GetBody()->GetLinearVelocity();
 
         float velChangeX = desiredX - currentVelocity.x;

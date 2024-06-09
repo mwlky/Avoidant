@@ -36,13 +36,12 @@ namespace Avoidant {
     }
 
     void Map::CreatePlayer() {
-        Engine::Vector2 pos;
         Settings data;
 
         b2BodyDef bodyDef;
         bodyDef.fixedRotation = true;
         bodyDef.type = b2_dynamicBody;
-        bodyDef.position.Set(pos.x, pos.y);
+        bodyDef.position.Set(data.StartPosition.x, data.StartPosition.y);
         b2Body* playerBody = m_World->CreateBody(&bodyDef);
 
         b2PolygonShape playerDynamicBox;
