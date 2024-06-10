@@ -1,7 +1,8 @@
+#include <SDL/SDL.h>
 #include <Code/Engine.h>
-#include "Player/Player.h"
+
 #include "Map/Map.h"
-#include "SDL2/SDL.h"
+#include "Player/Player.h"
 
 namespace Avoidant{
 
@@ -12,14 +13,13 @@ namespace Avoidant{
         ~Game();
 
         void Init();
-        void Tick(double deltaTime);
         void Render();
         void HandleEvents();
+        void Tick(double deltaTime);
 
         bool IsRunning() const;
 
     private:
-
         bool m_IsRunning = false;
 
         Map m_Map;

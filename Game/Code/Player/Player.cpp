@@ -3,6 +3,10 @@
 namespace Avoidant {
     Player::Player(b2Fixture *body) {
         m_Body = body;
+        Settings settings;
+
+        m_SourceRect = {0, 0, settings.xSize, settings.ySize};
+        m_DestRect = {0, 0, settings.xSize * 3, settings.ySize * 3};
     }
 
     Player::~Player() {
@@ -10,15 +14,21 @@ namespace Avoidant {
     }
 
     void Player::Init() {
-        m_PlayerTexture = Engine::SpriteLoader::LoadTexture(m_Data.SpritePath);
+        Settings settings;
+
+        m_PlayerTexture = Engine::SpriteLoader::LoadTexture(settings.SpritePath);
     }
 
     void Player::Tick() {
         CheckInput();
         UpdatePlayerPosition();
-
-        LOG(m_IsGrounded);
     }
+
+    void Player::Render() {
+        SDL_RenderCopy(Engine::Window::Renderer, m_PlayerTexture, &m_SourceRect, &m_DestRect);
+    }
+
+#pragma region === Movement ===
 
     void Player::UpdatePlayerPosition() {
         Settings settings;
@@ -26,15 +36,10 @@ namespace Avoidant {
         float newPosX = m_Body->GetBody()->GetPosition().x / settings.ScalingFactor;
         float newPosY = m_Body->GetBody()->GetPosition().y / settings.ScalingFactor;
 
-        m_DestRect.x = newPosX - m_Data.xGameSize * 0.5f;
+        m_DestRect.x = newPosX - settings.xGameSize * 0.5f;
 
         // Move sprite upward to fit into collider
-        m_DestRect.y = newPosY - m_Data.yGameSize * 0.5f - 5;
-    }
-
-    void Player::Render() {
-
-        SDL_RenderCopy(Engine::Window::Renderer, m_PlayerTexture, &m_SourceRect, &m_DestRect);
+        m_DestRect.y = newPosY - settings.yGameSize * 0.5f - 5;
     }
 
     void Player::CheckInput() {
@@ -45,16 +50,17 @@ namespace Avoidant {
         Settings settings;
 
         if (keystates[SDL_SCANCODE_D])
-            desiredX = m_Data.PlayerSpeed * settings.ScalingFactor;
+            desiredX = settings.PlayerSpeed * settings.ScalingFactor;
         else if (keystates[SDL_SCANCODE_A])
-            desiredX = -m_Data.PlayerSpeed * settings.ScalingFactor;
+            desiredX = -settings.PlayerSpeed * settings.ScalingFactor;
 
-        if (keystates[SDL_SCANCODE_SPACE] && m_IsGrounded) {
-            float jumpImpulse = m_Body->GetBody()->GetMass() * m_Data.JumpSpeed;
-            m_Body->GetBody()->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpImpulse), true);
+        if (keystates[SDL_SCANCODE_SPACE] && m_IsGrounded)
+            Jump();
 
-            m_IsGrounded = false;
-        }
+        MovePlayer(desiredX);
+    }
+
+    void Player::MovePlayer(float desiredX) {
 
         b2Vec2 currentVelocity = m_Body->GetBody()->GetLinearVelocity();
 
@@ -62,31 +68,40 @@ namespace Avoidant {
         float impulseX = m_Body->GetBody()->GetMass() * velChangeX;
 
         m_Body->GetBody()->ApplyLinearImpulseToCenter(b2Vec2(impulseX, 0), true);
+
     }
+
+    void Player::Jump() {
+        Settings settings;
+
+        float jumpImpulse = m_Body->GetBody()->GetMass() * settings.JumpSpeed;
+        m_Body->GetBody()->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpImpulse), true);
+
+        m_IsGrounded = false;
+    }
+
+#pragma endregion
+
+#pragma region === Ground Detection ===
 
     void Player::BeginContact(b2Contact *contact) {
         b2Fixture *fixtureA = contact->GetFixtureA();
         b2Fixture *fixtureB = contact->GetFixtureB();
 
-        if (fixtureA == m_Body || fixtureB == m_Body) {
-            if (fixtureA->IsSensor() || fixtureB->IsSensor()) {
-                m_GroundContacts++;
+        if (fixtureA == m_Body || fixtureB == m_Body)
+            if (fixtureA->IsSensor() || fixtureB->IsSensor())
                 m_IsGrounded = true;
-            }
-        }
     }
 
     void Player::EndContact(b2Contact *contact) {
         b2Fixture *fixtureA = contact->GetFixtureA();
         b2Fixture *fixtureB = contact->GetFixtureB();
 
-        if (fixtureA == m_Body || fixtureB == m_Body) {
-            if (fixtureA->IsSensor() || fixtureB->IsSensor()) {
-                m_GroundContacts--;
-
-                if (m_GroundContacts == 0)
-                    m_IsGrounded = false;
-            }
-        }
+        if (fixtureA == m_Body || fixtureB == m_Body)
+            if (fixtureA->IsSensor() || fixtureB->IsSensor())
+                m_IsGrounded = false;
     }
+
+#pragma endregion
+
 } // Avoidant

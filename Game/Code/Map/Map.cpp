@@ -13,6 +13,45 @@ namespace Avoidant {
         delete m_Player;
     }
 
+#pragma region === Init ===
+
+    void Map::InitMapTiles() {
+
+        Settings settings;
+
+        for (int x = 0; x < 16; ++x) {
+            for (int y = 0; y < 9; ++y) {
+
+                TileData data = m_Tiles[y][x];
+                int onSheetX = data.SheetX;
+                int onSheetY = data.SheetY;
+
+                int inSheetTileSize = settings.TileSize;
+                int InGameTileSize = settings.InGameTileSize;
+
+                SDL_Rect source{onSheetX * inSheetTileSize, onSheetY * inSheetTileSize, inSheetTileSize,
+                                inSheetTileSize};
+                SDL_Rect destination = {x * InGameTileSize, y * InGameTileSize, InGameTileSize, InGameTileSize};
+
+                Tile tile(source, destination);
+                m_TilesToDraw.push_back(tile);
+
+                if (data.HasCollision) {
+                    b2BodyDef tileBodyDef;
+                    tileBodyDef.position.Set((x * InGameTileSize + (InGameTileSize * 0.5f)) * settings.ScalingFactor,
+                                             (y * InGameTileSize + (InGameTileSize * 0.5f)) * settings.ScalingFactor);
+
+                    b2Body *tileBody = m_World->CreateBody(&tileBodyDef);
+                    b2PolygonShape tileBox;
+
+                    tileBox.SetAsBox((InGameTileSize * 0.5) * settings.ScalingFactor,
+                                     (InGameTileSize * 0.5f) * settings.ScalingFactor);
+                    tileBody->CreateFixture(&tileBox, 0.0f);
+                }
+            }
+        }
+    }
+
     void Map::Init() {
         m_TilesTexture = Engine::SpriteLoader::LoadTexture(
                 "../../Assets/Map/basic.png");
@@ -71,7 +110,7 @@ namespace Avoidant {
 
         b2PolygonShape footSensorBox;
         footSensorBox.SetAsBox(data.xSize * data.ScalingFactor / 4, data.ySize * data.ScalingFactor / 10,
-                               b2Vec2(0, (-data.ySize + 80.f )* data.ScalingFactor), 0);
+                               b2Vec2(0, (-data.ySize + 80.f) * data.ScalingFactor), 0);
 
         b2FixtureDef sensorFixtureDef;
         sensorFixtureDef.shape = &footSensorBox;
@@ -84,6 +123,15 @@ namespace Avoidant {
 
     void Map::InitBackground() {
         m_BackgroundTexture = Engine::SpriteLoader::LoadTexture("../../Assets/Map/windrise-background-cut.png");
+    }
+
+#pragma endregion
+
+#pragma region === Draw ===
+
+    void Map::DrawTiles() {
+        for (Tile &tile: m_TilesToDraw)
+            tile.Draw(m_TilesTexture);
     }
 
     void Map::Draw() {
@@ -99,61 +147,28 @@ namespace Avoidant {
         Engine::SpriteLoader::Draw(m_BackgroundTexture);
     }
 
-    void Map::InitMapTiles() {
+#pragma endregion
 
-        Settings settings;
-
-        for (int x = 0; x < 16; ++x) {
-            for (int y = 0; y < 9; ++y) {
-
-                TileData data = m_Tiles[y][x];
-                int onSheetX = data.SheetX;
-                int onSheetY = data.SheetY;
-
-                int inSheetTileSize = settings.TileSize;
-                int InGameTileSize = settings.InGameTileSize;
-
-                SDL_Rect source{onSheetX * inSheetTileSize, onSheetY * inSheetTileSize, inSheetTileSize,
-                                inSheetTileSize};
-                SDL_Rect destination = {x * InGameTileSize, y * InGameTileSize, InGameTileSize, InGameTileSize};
-
-                Tile tile(source, destination);
-                m_TilesToDraw.push_back(tile);
-
-                if (data.HasCollision) {
-                    b2BodyDef tileBodyDef;
-                    tileBodyDef.position.Set((x * InGameTileSize + (InGameTileSize * 0.5f)) * settings.ScalingFactor,
-                                             (y * InGameTileSize + (InGameTileSize * 0.5f)) * settings.ScalingFactor);
-
-                    b2Body *tileBody = m_World->CreateBody(&tileBodyDef);
-                    b2PolygonShape tileBox;
-
-                    tileBox.SetAsBox((InGameTileSize * 0.5) * settings.ScalingFactor,
-                                     (InGameTileSize * 0.5f) * settings.ScalingFactor);
-                    tileBody->CreateFixture(&tileBox, 0.0f);
-                }
-            }
-        }
-    }
-
-    void Map::DrawTiles() {
-        for (Tile &tile: m_TilesToDraw)
-            tile.Draw(m_TilesTexture);
-    }
+#pragma region === Tick ===
 
     void Map::Tick(double deltaTime) {
         m_Player->Tick();
         m_World->Step(deltaTime, 6, 8);
     }
 
-    void Map::EndContact(b2Contact *contact) {
-        m_Player->EndContact(contact);
-    }
+#pragma endregion
+
+#pragma region === Collision Detection ===
 
     void Map::BeginContact(b2Contact *contact) {
         m_Player->BeginContact(contact);
     }
 
+    void Map::EndContact(b2Contact *contact) {
+        m_Player->EndContact(contact);
+    }
+
+#pragma endregion
 }
 
 

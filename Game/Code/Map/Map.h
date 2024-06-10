@@ -1,14 +1,16 @@
 #pragma once
 
+#include <vector>
+#include <iostream>
+#include <box2d/box2d.h>
+
 #include <Code/Utilities/SpriteLoader.h>
 #include <Code/Math/Vector2.h>
+
 #include "Tile.h"
-#include <iostream>
-#include <vector>
 #include "TileData.h"
-#include "../Player/Player.h"
 #include "../DebugDraw.h"
-#include <box2d/box2d.h>
+#include "../Player/Player.h"
 
 namespace Avoidant {
 
@@ -23,16 +25,15 @@ namespace Avoidant {
         void Tick(double deltaTime);
 
     private:
+        void DrawTiles();
+        void InitMapTiles();
         void CreatePlayer();
         void InitBackground();
-        void InitMapTiles();
-        void DrawTiles();
 
         void DrawBackground() const;
 
         void EndContact(b2Contact *contact) override;
         void BeginContact(b2Contact *contact) override;
-
 
     private:
         SDL_Texture *m_BackgroundTexture = nullptr;
@@ -44,7 +45,7 @@ namespace Avoidant {
         Player* m_Player = nullptr;
         DebugDraw* m_DebugDraw = nullptr;
 
-//      Vector coordinates coresponds to cordinates on sheet
+//      Vector coordinates corresponds to coordinates on sheet
         TileData m_Tiles [9][16] {
 
                 {{0,0} ,{0,0}, {0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},},

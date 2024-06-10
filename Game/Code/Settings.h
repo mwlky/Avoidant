@@ -1,5 +1,7 @@
 #pragma once
 
+#include <Code/Math/Vector2.h>
+
 namespace Avoidant {
 
     struct Settings {

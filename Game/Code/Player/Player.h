@@ -1,12 +1,12 @@
 #pragma once
 
-#include <Code/Engine.h>
-#include <Code/Math/Vector2.h>
-#include <Code/Utilities/SpriteLoader.h>
-#include <Code/Utilities/Macros.h>
+#include "../Settings.h"
 #include <box2d/box2d.h>
 
-#include "../Settings.h"
+#include <Code/Engine.h>
+#include <Code/Math/Vector2.h>
+#include <Code/Utilities/Macros.h>
+#include <Code/Utilities/SpriteLoader.h>
 
 namespace Avoidant {
 
@@ -26,22 +26,22 @@ namespace Avoidant {
         void EndContact(b2Contact* contact);
 
     private:
+
+        void Jump();
         void CheckInput();
         void UpdatePlayerPosition();
+
+        void MovePlayer(float desiredX);
 
     private:
         b2Fixture* m_Body = nullptr;
         SDL_Texture* m_PlayerTexture = nullptr;
 
-        Settings m_Data;
-
-        // Position in sheet file
-        SDL_Rect m_SourceRect = {0,0, m_Data.xSize, m_Data.ySize};
-        // In game position
-        SDL_Rect m_DestRect = {0,0, m_Data.xSize * 3,m_Data.ySize * 3};
-
+    private:
         bool m_IsGrounded = false;
-        int m_GroundContacts = 0;
+
+        SDL_Rect m_DestRect;    // In game position
+        SDL_Rect m_SourceRect;  // Position in sheet file
     };
 
 } // Avoidant
