@@ -27,6 +27,7 @@ namespace Avoidant {
 
         CreatePlayer();
         m_Player->Init();
+        m_World->SetContactListener(this);
 
 #if DEBUG
         m_DebugDraw = new DebugDraw();
@@ -42,7 +43,7 @@ namespace Avoidant {
         bodyDef.fixedRotation = true;
         bodyDef.type = b2_dynamicBody;
         bodyDef.position.Set(data.StartPosition.x, data.StartPosition.y);
-        b2Body* playerBody = m_World->CreateBody(&bodyDef);
+        b2Body *playerBody = m_World->CreateBody(&bodyDef);
 
         b2PolygonShape playerDynamicBox;
         playerDynamicBox.SetAsBox(data.xSize * data.ScalingFactor / 2, data.ySize * data.ScalingFactor);
@@ -68,6 +69,15 @@ namespace Avoidant {
         fixtureDef.shape = &playerCircleBottom;
         playerBody->CreateFixture(&fixtureDef);
 
+        b2PolygonShape footSensorBox;
+        footSensorBox.SetAsBox(data.xSize * data.ScalingFactor / 4, data.ySize * data.ScalingFactor / 10,
+                               b2Vec2(0, (-data.ySize + 80.f )* data.ScalingFactor), 0);
+
+        b2FixtureDef sensorFixtureDef;
+        sensorFixtureDef.shape = &footSensorBox;
+        sensorFixtureDef.isSensor = true;
+
+        playerBody->CreateFixture(&sensorFixtureDef);
 
         m_Player = new Player(playerBody->GetFixtureList());
     }
@@ -118,7 +128,8 @@ namespace Avoidant {
                     b2Body *tileBody = m_World->CreateBody(&tileBodyDef);
                     b2PolygonShape tileBox;
 
-                    tileBox.SetAsBox((InGameTileSize * 0.5) * settings.ScalingFactor, (InGameTileSize * 0.5f) * settings.ScalingFactor);
+                    tileBox.SetAsBox((InGameTileSize * 0.5) * settings.ScalingFactor,
+                                     (InGameTileSize * 0.5f) * settings.ScalingFactor);
                     tileBody->CreateFixture(&tileBox, 0.0f);
                 }
             }
@@ -132,8 +143,15 @@ namespace Avoidant {
 
     void Map::Tick(double deltaTime) {
         m_Player->Tick();
-
         m_World->Step(deltaTime, 6, 8);
+    }
+
+    void Map::EndContact(b2Contact *contact) {
+        m_Player->EndContact(contact);
+    }
+
+    void Map::BeginContact(b2Contact *contact) {
+        m_Player->BeginContact(contact);
     }
 
 }

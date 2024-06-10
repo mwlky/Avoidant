@@ -25,8 +25,8 @@ namespace Avoidant {
         const int xGameSize = xSize * 3;
         const int yGameSize = ySize * 3;
 
-        const int PlayerSpeed = 200;
-        const int JumpSpeed = 300;
+        const int PlayerSpeed = 250;
+        const float JumpSpeed = 6.f;
 
         // ====================== Map Settings =======================================
         const int InGameTileSize = 80;

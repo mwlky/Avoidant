@@ -12,11 +12,11 @@
 
 namespace Avoidant {
 
-    class Map {
+    class Map : public b2ContactListener {
 
     public:
         Map() = default;
-        ~Map();
+        ~Map() override;
 
         void Init();
         void Draw();
@@ -29,6 +29,10 @@ namespace Avoidant {
         void DrawTiles();
 
         void DrawBackground() const;
+
+        void EndContact(b2Contact *contact) override;
+        void BeginContact(b2Contact *contact) override;
+
 
     private:
         SDL_Texture *m_BackgroundTexture = nullptr;

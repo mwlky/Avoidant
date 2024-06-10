@@ -16,6 +16,8 @@ namespace Avoidant {
     void Player::Tick() {
         CheckInput();
         UpdatePlayerPosition();
+
+        LOG(m_IsGrounded);
     }
 
     void Player::UpdatePlayerPosition() {
@@ -47,11 +49,11 @@ namespace Avoidant {
         else if (keystates[SDL_SCANCODE_A])
             desiredX = -m_Data.PlayerSpeed * settings.ScalingFactor;
 
-        if(keystates[SDL_SCANCODE_SPACE]){
-            float force = m_Body->GetBody()->GetMass() * 10 / (1/60.0);
+        if (keystates[SDL_SCANCODE_SPACE] && m_IsGrounded) {
+            float jumpImpulse = m_Body->GetBody()->GetMass() * m_Data.JumpSpeed;
+            m_Body->GetBody()->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpImpulse), true);
 
-            m_Body->GetBody()->ApplyForceToCenter(b2Vec2(0, force), true);
-            LOG("Jump");
+            m_IsGrounded = false;
         }
 
         b2Vec2 currentVelocity = m_Body->GetBody()->GetLinearVelocity();
@@ -60,5 +62,31 @@ namespace Avoidant {
         float impulseX = m_Body->GetBody()->GetMass() * velChangeX;
 
         m_Body->GetBody()->ApplyLinearImpulseToCenter(b2Vec2(impulseX, 0), true);
+    }
+
+    void Player::BeginContact(b2Contact *contact) {
+        b2Fixture *fixtureA = contact->GetFixtureA();
+        b2Fixture *fixtureB = contact->GetFixtureB();
+
+        if (fixtureA == m_Body || fixtureB == m_Body) {
+            if (fixtureA->IsSensor() || fixtureB->IsSensor()) {
+                m_GroundContacts++;
+                m_IsGrounded = true;
+            }
+        }
+    }
+
+    void Player::EndContact(b2Contact *contact) {
+        b2Fixture *fixtureA = contact->GetFixtureA();
+        b2Fixture *fixtureB = contact->GetFixtureB();
+
+        if (fixtureA == m_Body || fixtureB == m_Body) {
+            if (fixtureA->IsSensor() || fixtureB->IsSensor()) {
+                m_GroundContacts--;
+
+                if (m_GroundContacts == 0)
+                    m_IsGrounded = false;
+            }
+        }
     }
 } // Avoidant

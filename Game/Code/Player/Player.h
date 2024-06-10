@@ -15,12 +15,15 @@ namespace Avoidant {
     class Player {
 
     public:
-        Player(b2Fixture* body);
+        explicit Player(b2Fixture* body);
         ~Player();
 
         void Init();
         void Tick();
         void Render();
+
+        void BeginContact(b2Contact* contact);
+        void EndContact(b2Contact* contact);
 
     private:
         void CheckInput();
@@ -37,7 +40,8 @@ namespace Avoidant {
         // In game position
         SDL_Rect m_DestRect = {0,0, m_Data.xSize * 3,m_Data.ySize * 3};
 
-
+        bool m_IsGrounded = false;
+        int m_GroundContacts = 0;
     };
 
 } // Avoidant
