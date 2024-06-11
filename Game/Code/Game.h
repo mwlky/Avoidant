@@ -1,4 +1,4 @@
-#include <SDL/SDL.h>
+#include <SDL.h>
 #include <Code/Engine.h>
 
 #include "Map/Map.h"

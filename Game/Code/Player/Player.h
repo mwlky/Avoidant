@@ -30,6 +30,7 @@ namespace Avoidant {
         void Jump();
         void CheckInput();
         void UpdatePlayerPosition();
+        void PlayMovementAnimation(float movementDirection);
 
         void MovePlayer(float desiredX);
 
@@ -39,6 +40,10 @@ namespace Avoidant {
 
     private:
         bool m_IsGrounded = false;
+        bool m_IsFlipped = false;
+
+        int m_CurrentFrame {};
+        uint32 m_LastFrame {};
 
         SDL_Rect m_DestRect;    // In game position
         SDL_Rect m_SourceRect;  // Position in sheet file

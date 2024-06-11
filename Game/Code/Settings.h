@@ -30,6 +30,13 @@ namespace Avoidant {
         const int PlayerSpeed = 250;
         const float JumpSpeed = 6.f;
 
+        // Ticks time between switching sprites
+        const int AnimationDelay = 120;
+
+        const int RunAnimXPosOnSheet = xSize;
+        const int RunAnimYPosOnSheet = ySize;
+        const int SpritesAmount = 6;
+
         // ====================== Map Settings =======================================
         const int InGameTileSize = 80;
         const int TileSize = 32;

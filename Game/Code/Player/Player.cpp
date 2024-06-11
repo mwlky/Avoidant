@@ -25,7 +25,12 @@ namespace Avoidant {
     }
 
     void Player::Render() {
-        SDL_RenderCopy(Engine::Window::Renderer, m_PlayerTexture, &m_SourceRect, &m_DestRect);
+
+        if (m_IsFlipped)
+            SDL_RenderCopyEx(Engine::Window::Renderer, m_PlayerTexture, &m_SourceRect, &m_DestRect, 0, NULL,
+                             SDL_FLIP_HORIZONTAL);
+        else
+            SDL_RenderCopy(Engine::Window::Renderer, m_PlayerTexture, &m_SourceRect, &m_DestRect);
     }
 
 #pragma region === Movement ===
@@ -49,14 +54,15 @@ namespace Avoidant {
 
         Settings settings;
 
+        if (keystates[SDL_SCANCODE_SPACE] && m_IsGrounded)
+            Jump();
+
         if (keystates[SDL_SCANCODE_D])
             desiredX = settings.PlayerSpeed * settings.ScalingFactor;
         else if (keystates[SDL_SCANCODE_A])
             desiredX = -settings.PlayerSpeed * settings.ScalingFactor;
 
-        if (keystates[SDL_SCANCODE_SPACE] && m_IsGrounded)
-            Jump();
-
+        PlayMovementAnimation(desiredX);
         MovePlayer(desiredX);
     }
 
@@ -100,6 +106,38 @@ namespace Avoidant {
         if (fixtureA == m_Body || fixtureB == m_Body)
             if (fixtureA->IsSensor() || fixtureB->IsSensor())
                 m_IsGrounded = false;
+    }
+
+
+#pragma endregion
+
+#pragma region === Animation ===
+
+    void Player::PlayMovementAnimation(float movementDirection) {
+        Settings settings;
+
+        if (movementDirection == 0)
+            return;
+
+        if (movementDirection > 0)
+            m_IsFlipped = false;
+
+        else
+            m_IsFlipped = true;
+
+        uint32 currentTime = SDL_GetTicks();
+
+        if (currentTime - m_LastFrame > settings.AnimationDelay) {
+            m_SourceRect.y = settings.RunAnimYPosOnSheet;
+            m_SourceRect.x = settings.RunAnimXPosOnSheet + m_CurrentFrame * settings.RunAnimXPosOnSheet;
+            m_CurrentFrame++;
+
+            if (m_CurrentFrame >= settings.SpritesAmount)
+                m_CurrentFrame = 1;
+
+            m_LastFrame = currentTime;
+        }
+
     }
 
 #pragma endregion
