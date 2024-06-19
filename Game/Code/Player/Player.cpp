@@ -62,7 +62,12 @@ namespace Avoidant {
         else if (keystates[SDL_SCANCODE_A])
             desiredX = -settings.PlayerSpeed * settings.ScalingFactor;
 
-        PlayMovementAnimation(desiredX);
+        if (desiredX != 0)
+            PlayMovementAnimation(desiredX);
+
+        else
+            PlayIdleAnimation();
+
         MovePlayer(desiredX);
     }
 
@@ -114,30 +119,48 @@ namespace Avoidant {
 #pragma region === Animation ===
 
     void Player::PlayMovementAnimation(float movementDirection) {
-        Settings settings;
-
-        if (movementDirection == 0)
-            return;
-
         if (movementDirection > 0)
             m_IsFlipped = false;
 
         else
             m_IsFlipped = true;
 
-        uint32 currentTime = SDL_GetTicks();
+        PlayRunAnimation();
+    }
 
-        if (currentTime - m_LastFrame > settings.AnimationDelay) {
-            m_SourceRect.y = settings.RunAnimYPosOnSheet;
-            m_SourceRect.x = settings.RunAnimXPosOnSheet + m_CurrentFrame * settings.RunAnimXPosOnSheet;
+    void Player::PlayRunAnimation() {
+        Settings settings;
+
+        PlayAnimation(settings.RunAnimXPosOnSheet,
+                      settings.RunAnimYPosOnSheet,
+                      settings.RunSpritesAmount,
+                      settings.RunAnimationDelay);
+    }
+
+    void Player::PlayIdleAnimation() {
+        Settings settings;
+
+        PlayAnimation(settings.IdleAnimationXPosOnSheet,
+                      settings.IdleAnimationYPosOnSheet,
+                      settings.IdleSpritesAmount,
+                      settings.IdleAnimationDelay);
+    }
+
+    void Player::PlayAnimation(int xPosOnSheet, int yPosOnSheet, int spritesAmount, int delay) {
+        uint32 currentTime = SDL_GetTicks();
+        if (m_CurrentFrame >= spritesAmount)
+            m_CurrentFrame = 0;
+
+        if (currentTime - m_LastFrame > delay) {
+            m_SourceRect.y = yPosOnSheet;
+            m_SourceRect.x = xPosOnSheet + m_CurrentFrame * xPosOnSheet;
             m_CurrentFrame++;
 
-            if (m_CurrentFrame >= settings.SpritesAmount)
-                m_CurrentFrame = 1;
+            if (m_CurrentFrame >= spritesAmount)
+                m_CurrentFrame = 0;
 
             m_LastFrame = currentTime;
         }
-
     }
 
 #pragma endregion

@@ -29,10 +29,13 @@ namespace Avoidant {
 
         void Jump();
         void CheckInput();
+        void PlayRunAnimation();
+        void PlayIdleAnimation();
         void UpdatePlayerPosition();
         void PlayMovementAnimation(float movementDirection);
 
         void MovePlayer(float desiredX);
+        void PlayAnimation(int xPosOnSheet, int yPosOnSheet, int spritesAmount, int delay);
 
     private:
         b2Fixture* m_Body = nullptr;
