@@ -185,6 +185,11 @@ namespace Avoidant {
             return;
 
         if (yVel > 0)
+            PlayAnimation(settings.FallAnimXPosOnSheet,
+                          settings.FallAnimYPosOnSheet,
+                          settings.FallSpritesAmount,
+                          settings.FallAnimationDelay,
+                          false);
 
         else
             PlayAnimation(settings.JumpAnimXPosOnSheet,

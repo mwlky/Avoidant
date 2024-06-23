@@ -46,6 +46,11 @@ namespace Avoidant {
         const int JumpAnimYPosOnSheet = ySize * 2;
         const int JumpSpritesAmount = 1;
 
+        const int FallAnimationDelay = 100;
+        const int FallAnimXPosOnSheet = xSize;
+        const int FallAnimYPosOnSheet = ySize * 3;
+        const int FallSpritesAmount = 2;
+
         // ====================== Map Settings =======================================
         const int InGameTileSize = 80;
         const int TileSize = 32;
