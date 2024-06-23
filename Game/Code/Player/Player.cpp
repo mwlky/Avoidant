@@ -140,6 +140,11 @@ namespace Avoidant {
     void Player::PlayIdleAnimation() {
         Settings settings;
 
+        if(m_SourceRect.y != settings.IdleAnimationYPosOnSheet){
+            m_SourceRect.y = settings.IdleAnimationYPosOnSheet;
+            m_SourceRect.x = settings.IdleAnimationXPosOnSheet;
+        }
+
         PlayAnimation(settings.IdleAnimationXPosOnSheet,
                       settings.IdleAnimationYPosOnSheet,
                       settings.IdleSpritesAmount,
