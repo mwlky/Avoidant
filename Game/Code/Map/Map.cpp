@@ -16,7 +16,6 @@ namespace Avoidant {
 #pragma region === Init ===
 
     void Map::InitMapTiles() {
-
         Settings settings;
 
         for (int x = 0; x < 16; ++x) {
@@ -109,7 +108,7 @@ namespace Avoidant {
         playerBody->CreateFixture(&fixtureDef);
 
         b2PolygonShape footSensorBox;
-        footSensorBox.SetAsBox(data.xSize * data.ScalingFactor / 4, data.ySize * data.ScalingFactor / 10,
+        footSensorBox.SetAsBox(data.xSize * data.ScalingFactor * 0.5f , data.ySize * data.ScalingFactor * 0.1f,
                                b2Vec2(0, (-data.ySize + 80.f) * data.ScalingFactor), 0);
 
         b2FixtureDef sensorFixtureDef;

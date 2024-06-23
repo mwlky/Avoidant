@@ -22,6 +22,8 @@ namespace Avoidant {
     void Player::Tick() {
         CheckInput();
         UpdatePlayerPosition();
+
+        LOG(m_IsGrounded)
     }
 
     void Player::Render() {
@@ -72,14 +74,12 @@ namespace Avoidant {
     }
 
     void Player::MovePlayer(float desiredX) {
-
         b2Vec2 currentVelocity = m_Body->GetBody()->GetLinearVelocity();
 
         float velChangeX = desiredX - currentVelocity.x;
         float impulseX = m_Body->GetBody()->GetMass() * velChangeX;
 
         m_Body->GetBody()->ApplyLinearImpulseToCenter(b2Vec2(impulseX, 0), true);
-
     }
 
     void Player::Jump() {
@@ -99,18 +99,18 @@ namespace Avoidant {
         b2Fixture *fixtureA = contact->GetFixtureA();
         b2Fixture *fixtureB = contact->GetFixtureB();
 
-        if (fixtureA == m_Body || fixtureB == m_Body)
-            if (fixtureA->IsSensor() || fixtureB->IsSensor())
-                m_IsGrounded = true;
+        if ((fixtureA->IsSensor() || fixtureB->IsSensor()) &&
+            (fixtureA->GetBody() == m_Body->GetBody() || fixtureB->GetBody() == m_Body->GetBody()))
+            m_IsGrounded = true;
     }
 
     void Player::EndContact(b2Contact *contact) {
-        b2Fixture *fixtureA = contact->GetFixtureA();
-        b2Fixture *fixtureB = contact->GetFixtureB();
-
-        if (fixtureA == m_Body || fixtureB == m_Body)
-            if (fixtureA->IsSensor() || fixtureB->IsSensor())
-                m_IsGrounded = false;
+//        b2Fixture *fixtureA = contact->GetFixtureA();
+//        b2Fixture *fixtureB = contact->GetFixtureB();
+//
+//        if ((fixtureA->IsSensor() || fixtureB->IsSensor()) &&
+//            (fixtureA->GetBody() == m_Body->GetBody() || fixtureB->GetBody() == m_Body->GetBody()))
+//            m_IsGrounded = false;
     }
 
 
