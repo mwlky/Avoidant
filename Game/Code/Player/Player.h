@@ -34,8 +34,9 @@ namespace Avoidant {
         void UpdatePlayerPosition();
         void PlayMovementAnimation(float movementDirection);
 
+        void CheckPlayerJumpAnimation();
         void MovePlayer(float desiredX);
-        void PlayAnimation(int xPosOnSheet, int yPosOnSheet, int spritesAmount, int delay);
+        void PlayAnimation(int xPosOnSheet, int yPosOnSheet, int spritesAmount, int delay, bool loop = true, bool noDelay = true);
 
     private:
         b2Fixture* m_Body = nullptr;

@@ -22,8 +22,7 @@ namespace Avoidant {
     void Player::Tick() {
         CheckInput();
         UpdatePlayerPosition();
-
-        LOG(m_IsGrounded)
+        CheckPlayerJumpAnimation();
     }
 
     void Player::Render() {
@@ -131,19 +130,21 @@ namespace Avoidant {
     void Player::PlayRunAnimation() {
         Settings settings;
 
+        if (!m_IsGrounded)
+            return;
+
         PlayAnimation(settings.RunAnimXPosOnSheet,
                       settings.RunAnimYPosOnSheet,
                       settings.RunSpritesAmount,
-                      settings.RunAnimationDelay);
+                      settings.RunAnimationDelay,
+                      true);
     }
 
     void Player::PlayIdleAnimation() {
         Settings settings;
 
-        if(m_SourceRect.y != settings.IdleAnimationYPosOnSheet){
-            m_SourceRect.y = settings.IdleAnimationYPosOnSheet;
-            m_SourceRect.x = settings.IdleAnimationXPosOnSheet;
-        }
+        if (!m_IsGrounded)
+            return;
 
         PlayAnimation(settings.IdleAnimationXPosOnSheet,
                       settings.IdleAnimationYPosOnSheet,
@@ -151,8 +152,14 @@ namespace Avoidant {
                       settings.IdleAnimationDelay);
     }
 
-    void Player::PlayAnimation(int xPosOnSheet, int yPosOnSheet, int spritesAmount, int delay) {
+    void Player::PlayAnimation(int xPosOnSheet, int yPosOnSheet, int spritesAmount, int delay, bool loop, bool noDelay) {
         uint32 currentTime = SDL_GetTicks();
+
+        if (noDelay && m_SourceRect.y != yPosOnSheet) {
+            m_SourceRect.y = yPosOnSheet;
+            m_SourceRect.x = xPosOnSheet;
+        }
+
         if (m_CurrentFrame >= spritesAmount)
             m_CurrentFrame = 0;
 
@@ -161,11 +168,32 @@ namespace Avoidant {
             m_SourceRect.x = xPosOnSheet + m_CurrentFrame * xPosOnSheet;
             m_CurrentFrame++;
 
-            if (m_CurrentFrame >= spritesAmount)
+            if (loop && m_CurrentFrame >= spritesAmount)
                 m_CurrentFrame = 0;
 
             m_LastFrame = currentTime;
         }
+    }
+
+    void Player::CheckPlayerJumpAnimation() {
+        Settings settings;
+        b2Vec2 playerVelocity = m_Body->GetBody()->GetLinearVelocity();
+
+        float yVel = std::round(playerVelocity.y);
+
+        if (yVel == 0)
+            return;
+
+        if (yVel > 0)
+
+        else
+            PlayAnimation(settings.JumpAnimXPosOnSheet,
+                          settings.JumpAnimYPosOnSheet,
+                          settings.JumpSpritesAmount,
+                          settings.JumpAnimationDelay,
+                          false);
+
+
     }
 
 #pragma endregion
