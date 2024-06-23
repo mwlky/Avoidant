@@ -41,10 +41,10 @@ namespace Avoidant {
         const int IdleAnimationYPosOnSheet = 0;
         const int IdleSpritesAmount = 3;
 
-        const int JumpAnimationDelay = 300;
+        const int JumpAnimationDelay = 200;
         const int JumpAnimXPosOnSheet = xSize * 2;
         const int JumpAnimYPosOnSheet = ySize * 2;
-        const int JumpSpritesAmount = 1;
+        const int JumpSpritesAmount = 3;
 
         const int FallAnimationDelay = 100;
         const int FallAnimXPosOnSheet = xSize;
