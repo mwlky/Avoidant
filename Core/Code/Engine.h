@@ -1,5 +1,7 @@
 #pragma once
 
+#include <Code/Math/Math.h>
+
 #include "SDL2/SDL.h"
 #include "Code/Window/Window.h"
 #include "Code/Utilities/SpriteLoader.h"

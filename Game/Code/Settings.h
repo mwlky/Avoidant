@@ -59,5 +59,20 @@ namespace Avoidant {
 
         // ======================= Physics Settings ======================================
         const float ScalingFactor = 0.01f;
+
+        // ======================= Bullets Settings =======================================
+        const char* BulletSpritePath = "../../Assets/Bullet/bullet.png";
+
+        const float CooldownBetweenBullets = 2.f;
+
+        const float MaxBulletHeight = 5;
+        const int LeftSpawnPosition = 1;
+        const int RightSpawnPosition = Width * ScalingFactor;
+
+        const int BulletSpriteSize = 32;
+        const int InGameBulletSize = 92;
+
+        const float BulletSpeed = 5.f;
+        const float MaxBulletLifeTime = 3.f;
     };
 }

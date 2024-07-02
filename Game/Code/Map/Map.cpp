@@ -11,9 +11,34 @@ namespace Avoidant {
         delete m_DebugDraw;
 #endif
         delete m_Player;
+        delete m_BulletsManager;
     }
 
 #pragma region === Init ===
+
+    void Map::Init() {
+        m_TilesTexture = Engine::SpriteLoader::LoadTexture(
+                "../../Assets/Map/basic.png");
+
+        Settings settings;
+
+        b2Vec2 gravity(settings.Gravity.x, settings.Gravity.y);
+        m_World = new b2World(gravity);
+
+        InitBackground();
+        InitMapTiles();
+
+        CreatePlayer();
+        m_Player->Init();
+        m_World->SetContactListener(this);
+
+        m_BulletsManager = new BulletManager(m_World);
+#if DEBUG
+        m_DebugDraw = new DebugDraw();
+        m_DebugDraw->SetFlags(b2Draw::e_shapeBit);
+        m_World->SetDebugDraw(m_DebugDraw);
+#endif
+    }
 
     void Map::InitMapTiles() {
         Settings settings;
@@ -51,29 +76,6 @@ namespace Avoidant {
         }
     }
 
-    void Map::Init() {
-        m_TilesTexture = Engine::SpriteLoader::LoadTexture(
-                "../../Assets/Map/basic.png");
-
-        Settings settings;
-
-        b2Vec2 gravity(settings.Gravity.x, settings.Gravity.y);
-        m_World = new b2World(gravity);
-
-        InitBackground();
-        InitMapTiles();
-
-        CreatePlayer();
-        m_Player->Init();
-        m_World->SetContactListener(this);
-
-#if DEBUG
-        m_DebugDraw = new DebugDraw();
-        m_DebugDraw->SetFlags(b2Draw::e_shapeBit);
-        m_World->SetDebugDraw(m_DebugDraw);
-#endif
-    }
-
     void Map::CreatePlayer() {
         Settings data;
 
@@ -84,15 +86,15 @@ namespace Avoidant {
         b2Body *playerBody = m_World->CreateBody(&bodyDef);
 
         b2PolygonShape playerDynamicBox;
-        playerDynamicBox.SetAsBox(data.xSize * data.ScalingFactor / 2, data.ySize * data.ScalingFactor);
+        playerDynamicBox.SetAsBox(data.xSize * data.ScalingFactor * 0.5f, data.ySize * data.ScalingFactor);
 
         b2CircleShape playerCircleTop;
-        playerCircleTop.m_radius = data.xSize * data.ScalingFactor / 2;
-        playerCircleTop.m_p.Set(0, data.ySize * data.ScalingFactor / 2);
+        playerCircleTop.m_radius = data.xSize * data.ScalingFactor * 0.5f;
+        playerCircleTop.m_p.Set(0, data.ySize * data.ScalingFactor * 0.5f);
 
         b2CircleShape playerCircleBottom;
-        playerCircleBottom.m_radius = data.xSize * data.ScalingFactor / 2;
-        playerCircleBottom.m_p.Set(0, -data.ySize * data.ScalingFactor / 2);
+        playerCircleBottom.m_radius = data.xSize * data.ScalingFactor * 0.5f;
+        playerCircleBottom.m_p.Set(0, -data.ySize * data.ScalingFactor * 0.5f);
 
         b2FixtureDef fixtureDef;
         fixtureDef.shape = &playerDynamicBox;
@@ -134,9 +136,12 @@ namespace Avoidant {
     }
 
     void Map::Draw() {
+
         DrawBackground();
         DrawTiles();
         m_Player->Render();
+        m_BulletsManager->Draw();
+
 #if DEBUG
         m_World->DebugDraw();
 #endif
@@ -152,6 +157,7 @@ namespace Avoidant {
 
     void Map::Tick(double deltaTime) {
         m_Player->Tick();
+        m_BulletsManager->Tick(deltaTime);
         m_World->Step(deltaTime, 6, 8);
     }
 

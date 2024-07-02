@@ -11,6 +11,7 @@
 #include "TileData.h"
 #include "../DebugDraw.h"
 #include "../Player/Player.h"
+#include "../Bullets/BulletManager.h"
 
 namespace Avoidant {
 
@@ -43,7 +44,12 @@ namespace Avoidant {
 
         b2World* m_World = nullptr;
         Player* m_Player = nullptr;
+        BulletManager* m_BulletsManager = nullptr;
+
+#if DEBUG
         DebugDraw* m_DebugDraw = nullptr;
+#endif
+
 
 //      Vector coordinates corresponds to coordinates on sheet
         TileData m_Tiles [9][16] {

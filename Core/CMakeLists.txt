@@ -19,7 +19,9 @@ add_library(Engine STATIC
         Code/Utilities/SpriteLoader.h
         Code/Math/Vector2.cpp
         Code/Math/Vector2.h
-        Code/Utilities/Macros.h)
+        Code/Utilities/Macros.h
+        Code/Math/Math.cpp
+        Code/Math/Math.h)
 
 target_link_libraries(Engine PUBLIC SDL2::SDL2 SDL2_image)
 

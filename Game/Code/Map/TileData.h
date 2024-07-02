@@ -2,7 +2,7 @@
 
 namespace Avoidant {
 
-    struct TileData{
+    struct TileData {
 
         TileData() = default;
 
