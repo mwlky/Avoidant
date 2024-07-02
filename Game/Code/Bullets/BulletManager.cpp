@@ -13,7 +13,7 @@ namespace Avoidant {
     void BulletManager::Tick(double deltaTime) {
         m_CurrentTime += deltaTime;
 
-        for (Bullet& bullet: m_Bullets)
+        for (Bullet &bullet: m_Bullets)
             bullet.Tick(deltaTime);
 
         TrySpawnBullet();
@@ -31,7 +31,7 @@ namespace Avoidant {
     }
 
     void BulletManager::Draw() {
-        for (Bullet& bullet: m_Bullets)
+        for (Bullet &bullet: m_Bullets)
             bullet.Draw();
     }
 
@@ -48,13 +48,19 @@ namespace Avoidant {
         bulletBodyDef.type = b2_kinematicBody;
         bulletBodyDef.position.Set(x, y);
 
-        b2Body *tileBody = m_World->CreateBody(&bulletBodyDef);
-        b2PolygonShape tileBox;
+        b2Body *bulletBody = m_World->CreateBody(&bulletBodyDef);
 
-        tileBox.SetAsBox(settings.InGameBulletSize * 0.5f * settings.ScalingFactor,
-                         settings.InGameBulletSize * 0.5f * settings.ScalingFactor);
+        b2PolygonShape fixtureShape;
+        fixtureShape.SetAsBox(settings.InGameBulletSize * 0.5f * settings.ScalingFactor,
+                              settings.InGameBulletSize * 0.5f * settings.ScalingFactor);
 
-        Bullet newBullet = Bullet(direction, x, y, tileBody);
+        b2FixtureDef polygonShape;
+        polygonShape.isSensor = true;
+        polygonShape.shape = &fixtureShape;
+
+        bulletBody->CreateFixture(&polygonShape);
+
+        Bullet newBullet = Bullet(direction, x, y, bulletBody);
         m_Bullets.push_back(newBullet);
     }
 

@@ -98,6 +98,9 @@ namespace Avoidant {
         b2Fixture *fixtureA = contact->GetFixtureA();
         b2Fixture *fixtureB = contact->GetFixtureB();
 
+        if(std::abs(m_Body->GetBody()->GetLinearVelocity().y) >= 1.f)
+            return;
+
         if ((fixtureA->IsSensor() || fixtureB->IsSensor()) &&
             (fixtureA->GetBody() == m_Body->GetBody() || fixtureB->GetBody() == m_Body->GetBody()))
             m_IsGrounded = true;
