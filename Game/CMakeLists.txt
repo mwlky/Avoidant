@@ -35,7 +35,8 @@ add_executable(Game "${Source}"
         Code/Bullets/BulletManager.cpp
         Code/Bullets/BulletManager.h
         Code/Bullets/Bullet.cpp
-        Code/Bullets/Bullet.h)
+        Code/Bullets/Bullet.h
+        Code/Bullets/BulletUserData.h)
 
 target_link_libraries(Game PUBLIC Engine ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
 target_link_libraries(Game PUBLIC ${CMAKE_SOURCE_DIR}/Include/box2d/libbox2d.a)

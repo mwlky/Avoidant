@@ -1,5 +1,6 @@
 #include "Bullet.h"
 #include "../Settings.h"
+#include "BulletUserData.h"
 
 namespace Avoidant {
 
@@ -53,7 +54,7 @@ namespace Avoidant {
     }
 
     Bullet::~Bullet() {
-        LOG("Hy");
+
     }
 }
 

@@ -11,8 +11,12 @@ namespace Avoidant {
         ~Bullet();
 
         void Tick(double deltaTime);
+
         void Draw();
+
         bool CheckLifetime();
+
+        b2Body *GetBody() const { return m_Body; }
 
     private:
         void UpdateLifeTime(float deltaTime);
@@ -22,7 +26,7 @@ namespace Avoidant {
         SDL_Texture *m_Texture = nullptr;
 
         SDL_Rect m_SourceRect{0, 0, 32, 32};
-        SDL_Rect m_DestRect{0,0,32,32};
+        SDL_Rect m_DestRect{0, 0, 32, 32};
 
         int m_Direction = 0;
         double m_LifeTime = 0;

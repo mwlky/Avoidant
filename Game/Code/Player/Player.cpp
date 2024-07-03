@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "../Bullets/BulletUserData.h"
 
 namespace Avoidant {
     Player::Player(b2Fixture *body) {
@@ -98,12 +99,20 @@ namespace Avoidant {
         b2Fixture *fixtureA = contact->GetFixtureA();
         b2Fixture *fixtureB = contact->GetFixtureB();
 
-        if(std::abs(m_Body->GetBody()->GetLinearVelocity().y) >= 1.f)
-            return;
+        b2Body* bodyA = fixtureA->GetBody();
+        b2Body* bodyB = fixtureB->GetBody();
 
-        if ((fixtureA->IsSensor() || fixtureB->IsSensor()) &&
-            (fixtureA->GetBody() == m_Body->GetBody() || fixtureB->GetBody() == m_Body->GetBody()))
+        BulletUserData* bulletUserDataA = reinterpret_cast<BulletUserData*>(bodyA->GetUserData().pointer);
+        BulletUserData* bulletUserDataB = reinterpret_cast<BulletUserData*>(bodyB->GetUserData().pointer);
+
+        if (bulletUserDataA && bulletUserDataA->type == "bullet") {
+            LOG("Bullet!");
+        } else if (bulletUserDataB && bulletUserDataB->type == "bullet") {
+            LOG("Bullet!");
+        } else if ((fixtureA->IsSensor() || fixtureB->IsSensor()) &&
+                   (bodyA == m_Body->GetBody() || bodyB == m_Body->GetBody())) {
             m_IsGrounded = true;
+        }
     }
 
     void Player::EndContact(b2Contact *contact) {
