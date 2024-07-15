@@ -19,6 +19,10 @@ namespace Avoidant {
         const char *SpritePath = "../../Assets/Player/adventurer-Sheet.png";
         const Engine::Vector2 StartPosition {5.5f,3.4f};
 
+        const int StartLives = 3;
+
+        const float BulletCollisionDelay = 0.1f;
+
         // Sprite size on sheet
         const int xSize = 50;
         const int ySize = 37;
@@ -74,5 +78,12 @@ namespace Avoidant {
 
         const float BulletSpeed = 5.f;
         const float MaxBulletLifeTime = 3.f;
+
+        // ======================= Hearts Settings =======================================
+        const char* HeartsSpritePath = "../../Assets/Player/hearts.png";
+
+        const int HearthSpriteSize = 16;
+        const int HearthInGameSize = 64;
+        const int HearthSpacing = HearthInGameSize * 0.9f;
     };
 }

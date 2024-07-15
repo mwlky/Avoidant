@@ -1,5 +1,4 @@
 #include "Player.h"
-#include "../Bullets/BulletUserData.h"
 
 namespace Avoidant {
     Player::Player(b2Fixture *body) {
@@ -8,10 +7,17 @@ namespace Avoidant {
 
         m_SourceRect = {0, 0, settings.xSize, settings.ySize};
         m_DestRect = {0, 0, settings.xSize * 3, settings.ySize * 3};
+
+        m_CurrentLives = settings.StartLives;
+
+        m_HeartsManager = new HeartsManager;
     }
 
     Player::~Player() {
         SDL_DestroyTexture(m_PlayerTexture);
+
+        delete m_HeartsManager;
+//        delete m_Body;
     }
 
     void Player::Init() {
@@ -20,10 +26,12 @@ namespace Avoidant {
         m_PlayerTexture = Engine::SpriteLoader::LoadTexture(settings.SpritePath);
     }
 
-    void Player::Tick() {
+    void Player::Tick(double deltaTime) {
         CheckInput();
         UpdatePlayerPosition();
         CheckPlayerJumpAnimation();
+
+        m_BulletCollisionTime += deltaTime;
     }
 
     void Player::Render() {
@@ -33,6 +41,8 @@ namespace Avoidant {
                              SDL_FLIP_HORIZONTAL);
         else
             SDL_RenderCopy(Engine::Window::Renderer, m_PlayerTexture, &m_SourceRect, &m_DestRect);
+
+        m_HeartsManager->DrawHearts(m_CurrentLives);
     }
 
 #pragma region === Movement ===
@@ -99,20 +109,22 @@ namespace Avoidant {
         b2Fixture *fixtureA = contact->GetFixtureA();
         b2Fixture *fixtureB = contact->GetFixtureB();
 
-        b2Body* bodyA = fixtureA->GetBody();
-        b2Body* bodyB = fixtureB->GetBody();
+        b2Body *bodyA = fixtureA->GetBody();
+        b2Body *bodyB = fixtureB->GetBody();
 
-        BulletUserData* bulletUserDataA = reinterpret_cast<BulletUserData*>(bodyA->GetUserData().pointer);
-        BulletUserData* bulletUserDataB = reinterpret_cast<BulletUserData*>(bodyB->GetUserData().pointer);
+        BulletUserData *bulletUserDataA = reinterpret_cast<BulletUserData *>(bodyA->GetUserData().pointer);
+        BulletUserData *bulletUserDataB = reinterpret_cast<BulletUserData *>(bodyB->GetUserData().pointer);
 
-        if (bulletUserDataA && bulletUserDataA->type == "bullet") {
-            LOG("Bullet!");
-        } else if (bulletUserDataB && bulletUserDataB->type == "bullet") {
-            LOG("Bullet!");
-        } else if ((fixtureA->IsSensor() || fixtureB->IsSensor()) &&
-                   (bodyA == m_Body->GetBody() || bodyB == m_Body->GetBody())) {
+        if (bulletUserDataA && bulletUserDataA->type == "bullet")
+            BulletCollision();
+
+        else if (bulletUserDataB && bulletUserDataB->type == "bullet")
+            BulletCollision();
+
+        else if ((fixtureA->IsSensor() || fixtureB->IsSensor()) &&
+                 (bodyA == m_Body->GetBody() || bodyB == m_Body->GetBody()))
             m_IsGrounded = true;
-        }
+
     }
 
     void Player::EndContact(b2Contact *contact) {
@@ -164,7 +176,8 @@ namespace Avoidant {
                       settings.IdleAnimationDelay);
     }
 
-    void Player::PlayAnimation(int xPosOnSheet, int yPosOnSheet, int spritesAmount, int delay, bool loop, bool noDelay) {
+    void
+    Player::PlayAnimation(int xPosOnSheet, int yPosOnSheet, int spritesAmount, int delay, bool loop, bool noDelay) {
         uint32 currentTime = SDL_GetTicks();
 
         if (noDelay && m_SourceRect.y != yPosOnSheet) {
@@ -211,6 +224,24 @@ namespace Avoidant {
                           false);
 
 
+    }
+
+    void Player::BulletCollision() {
+        Settings settings;
+
+        if (m_BulletCollisionTime < settings.BulletCollisionDelay)
+            return;
+
+        m_BulletCollisionTime = 0;
+
+        m_CurrentLives--;
+
+        if (m_CurrentLives <= 0)
+            LOG("DEAD!")
+    }
+
+    bool Player::IsAlive() const {
+        return m_CurrentLives > 0;
     }
 
 #pragma endregion

@@ -26,7 +26,9 @@ namespace Avoidant {
     }
 
     void Game::Tick(double deltaTime) {
-        m_Map.Tick(deltaTime);
+
+        if (m_Map.IsPlayerAlive())
+            m_Map.Tick(deltaTime);
     }
 
     void Game::Render() {

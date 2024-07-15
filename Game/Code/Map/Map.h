@@ -25,6 +25,8 @@ namespace Avoidant {
         void Draw();
         void Tick(double deltaTime);
 
+        bool IsPlayerAlive() const;
+
     private:
         void DrawTiles();
         void InitMapTiles();

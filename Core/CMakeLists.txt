@@ -21,7 +21,9 @@ add_library(Engine STATIC
         Code/Math/Vector2.h
         Code/Utilities/Macros.h
         Code/Math/Math.cpp
-        Code/Math/Math.h)
+        Code/Math/Math.h
+        Code/Utilities/Application.cpp
+        Code/Utilities/Application.h)
 
 target_link_libraries(Engine PUBLIC SDL2::SDL2 SDL2_image)
 

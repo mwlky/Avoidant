@@ -1,6 +1,7 @@
 #include "Game.h"
 
 int main() {
+    Engine::Engine engine;
     Avoidant::Game game;
     game.Init();
 

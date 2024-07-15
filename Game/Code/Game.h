@@ -6,7 +6,7 @@
 
 namespace Avoidant{
 
-    class Game {
+    class Game : public Engine::Application {
 
     public:
         Game();

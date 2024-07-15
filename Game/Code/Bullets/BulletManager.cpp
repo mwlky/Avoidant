@@ -61,7 +61,7 @@ namespace Avoidant {
 
         bulletBody->CreateFixture(&polygonShape);
 
-        BulletUserData* bulletUserData = new BulletUserData();
+        BulletUserData *bulletUserData = new BulletUserData();
         bulletBody->GetUserData().pointer = reinterpret_cast<uintptr_t>(bulletUserData);
 
         Bullet newBullet = Bullet(direction, x, y, bulletBody);
@@ -84,21 +84,18 @@ namespace Avoidant {
     }
 
     void BulletManager::KillBullets() {
-        auto it = std::remove_if(m_Bullets.begin(), m_Bullets.end(), [this](Bullet& bullet) {
+        auto it = std::remove_if(m_Bullets.begin(), m_Bullets.end(), [this](Bullet &bullet) {
             if (bullet.CheckLifetime()) {
-                b2Body* body = bullet.GetBody();
-                BulletUserData* userData = reinterpret_cast<BulletUserData*>(body->GetUserData().pointer);
+                b2Body *body = bullet.GetBody();
+                BulletUserData *userData = reinterpret_cast<BulletUserData *>(body->GetUserData().pointer);
 
-                if (userData)
-                    delete userData;
+                delete userData;
 
                 m_World->DestroyBody(body);
                 return true;
             }
             return false;
         });
-
-//        m_World->DestroyBody(b)
 
         m_Bullets.erase(it, m_Bullets.end());
     }

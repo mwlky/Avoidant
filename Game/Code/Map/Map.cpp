@@ -156,7 +156,7 @@ namespace Avoidant {
 #pragma region === Tick ===
 
     void Map::Tick(double deltaTime) {
-        m_Player->Tick();
+        m_Player->Tick(deltaTime);
         m_BulletsManager->Tick(deltaTime);
         m_World->Step(deltaTime, 6, 8);
     }
@@ -171,6 +171,10 @@ namespace Avoidant {
 
     void Map::EndContact(b2Contact *contact) {
         m_Player->EndContact(contact);
+    }
+
+    bool Map::IsPlayerAlive() const {
+        return m_Player->IsAlive();
     }
 
 #pragma endregion
