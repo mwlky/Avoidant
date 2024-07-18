@@ -1,3 +1,4 @@
+#include <Code/Utilities/Macros.h>
 #include "Window.h"
 
 SDL_Renderer *Engine::Window::Renderer = nullptr;
@@ -9,6 +10,9 @@ namespace Engine{
 
         if(IMG_Init(IMG_INIT_PNG) == 0)
             std::cerr << "[SDL_Image Initialize Error] " << SDL_GetError() << std::endl;
+
+        if(TTF_Init() == -1)
+            std::cerr << "[SDL_TTF Initialize Error] " << SDL_GetError() << std::endl;
 
         m_Window = SDL_CreateWindow(title, xPos, yPos, width, height, SDL_WINDOW_SHOWN);
         if (m_Window) {

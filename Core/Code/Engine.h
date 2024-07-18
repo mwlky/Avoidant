@@ -22,7 +22,7 @@ namespace Engine {
         SDL_Texture* LoadTexture(const char* path);
 
     private:
-        Window *m_Window = nullptr;\
+        Window *m_Window = nullptr;
     };
 
 }

@@ -30,7 +30,7 @@ namespace Engine {
             LOG_ERROR("No found texture to draw");
     }
 
-    void SpriteLoader::Draw(SDL_Texture *texture, SDL_Rect sourceRect, SDL_Rect position) {
+    void SpriteLoader::Draw(SDL_Texture *texture, SDL_Rect& sourceRect, SDL_Rect& position) {
         if(texture != nullptr)
             SDL_RenderCopy(Window::Renderer, texture, &sourceRect, &position);
 

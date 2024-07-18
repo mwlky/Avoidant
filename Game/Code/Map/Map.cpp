@@ -17,6 +17,8 @@ namespace Avoidant {
 #pragma region === Init ===
 
     void Map::Init() {
+        m_IsInitialized = true;
+
         m_TilesTexture = Engine::SpriteLoader::LoadTexture(
                 "../../Assets/Map/basic.png");
 
@@ -175,6 +177,10 @@ namespace Avoidant {
 
     bool Map::IsPlayerAlive() const {
         return m_Player->IsAlive();
+    }
+
+    bool Map::IsInitialized() const {
+        return m_IsInitialized;
     }
 
 #pragma endregion

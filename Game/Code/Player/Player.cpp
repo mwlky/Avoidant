@@ -237,7 +237,7 @@ namespace Avoidant {
         m_CurrentLives--;
 
         if (m_CurrentLives <= 0)
-            LOG("DEAD!")
+            LOG("DEAD!");
     }
 
     bool Player::IsAlive() const {

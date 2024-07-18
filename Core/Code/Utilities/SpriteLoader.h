@@ -15,7 +15,7 @@ namespace Engine{
 
         static void Draw(SDL_Texture* texture);
         static void Draw(SDL_Texture *texture, SDL_Rect destinationPosition);
-        static void Draw(SDL_Texture* texture, SDL_Rect sourceRect, SDL_Rect position);
+        static void Draw(SDL_Texture* texture, SDL_Rect& sourceRect, SDL_Rect& position);
     };
 }
 

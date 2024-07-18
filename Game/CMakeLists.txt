@@ -3,25 +3,25 @@ project(Avoidant)
 
 set(CMAKE_CXX_STANDARD 20)
 
-# Include Core directory
 add_subdirectory("../Core" Core)
 
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
+find_package(SDL2_ttf REQUIRED)
 
 include_directories(${SDL2_INCLUDE_DIRS})
 include_directories(${SDL2_IMAGE_INCLUDE_DIRS})
+include_directories(${SDL2_TTF_INCLUDE_DIRS})
 
 include_directories(${CMAKE_SOURCE_DIR}/Include)
-include_directories(${CMAKE_SOURCE_DIR}/Include/box2d)
 
 if(CMAKE_BUILD_TYPE MATCHES Debug)
     add_compile_definitions(DEBUG)
 endif ()
 
-file(GLOB Source "Code/*.cpp")
+file(GLOB Engine "Code/*.cpp")
 
-add_executable(Game "${Source}"
+add_executable(Game "${Engine}"
         Code/Player/Player.cpp
         Code/Player/Player.h
         Code/Settings.h
@@ -38,7 +38,11 @@ add_executable(Game "${Source}"
         Code/Bullets/Bullet.h
         Code/Bullets/BulletUserData.h
         Code/Player/HeartsManager.cpp
-        Code/Player/HeartsManager.h)
+        Code/Player/HeartsManager.h
+        Code/UI/Button.cpp
+        Code/UI/Button.h
+        Code/UI/StartButton.cpp
+        Code/UI/StartButton.h)
 
-target_link_libraries(Game PUBLIC Engine ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
+target_link_libraries(Game PUBLIC Engine ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES} SDL_ttf)
 target_link_libraries(Game PUBLIC ${CMAKE_SOURCE_DIR}/Include/box2d/libbox2d.a)

@@ -85,5 +85,16 @@ namespace Avoidant {
         const int HearthSpriteSize = 16;
         const int HearthInGameSize = 64;
         const int HearthSpacing = HearthInGameSize * 0.9f;
+
+        // ======================= UI=======================================
+        const char* StartButtonPath = "../../Assets/UI/StartButton.png";
+
+        const int ButtonInGameX = Width * 0.4f + 50;
+        const int ButtonInGameY = Height * 0.5f + 100;
+        const int ButtonInGameWidth = 128;
+        const int ButtonInGameHeight = 128;
+
+        const int ButtonWidth = 56;
+        const int ButtonHeight = 56;
     };
 }

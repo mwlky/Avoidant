@@ -3,6 +3,7 @@
 
 #include "Map/Map.h"
 #include "Player/Player.h"
+#include "UI/StartButton.h"
 
 namespace Avoidant{
 
@@ -20,12 +21,17 @@ namespace Avoidant{
         bool IsRunning() const;
 
     private:
+        void InitUI();
+        void StartGame();
+
+    private:
         bool m_IsRunning = false;
 
         Map m_Map;
+        SDL_Event m_Event;
 
         Engine::Engine* m_Engine = nullptr;
-        SDL_Event m_Event;
+        StartButton* m_StartButton = nullptr;
     };
 }
 

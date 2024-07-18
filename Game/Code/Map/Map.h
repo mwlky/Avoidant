@@ -26,6 +26,7 @@ namespace Avoidant {
         void Tick(double deltaTime);
 
         bool IsPlayerAlive() const;
+        bool IsInitialized() const;
 
     private:
         void DrawTiles();
@@ -51,6 +52,9 @@ namespace Avoidant {
 #if DEBUG
         DebugDraw* m_DebugDraw = nullptr;
 #endif
+
+    private:
+        bool m_IsInitialized = false;
 
 
 //      Vector coordinates corresponds to coordinates on sheet
