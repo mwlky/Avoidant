@@ -96,5 +96,7 @@ namespace Avoidant {
 
         const int ButtonWidth = 56;
         const int ButtonHeight = 56;
+
+        const char* MainMenuFontPath = "../../Assets/UI/Pixels.ttf";
     };
 }

@@ -9,32 +9,14 @@ namespace Avoidant {
         m_Engine->OpenWindow(settings.WindowName, settings.XPosition, settings.YPosition, settings.Width,
                              settings.Height);
 
-        InitUI();
+        m_Ui = new UI;
+        m_Ui->Init();
 
         m_IsRunning = true;
     }
 
-    void Game::InitUI() {
-        Settings settings;
-
-        SDL_Rect source;
-        source.x = 0;
-        source.y = 0;
-        source.w = settings.ButtonWidth;
-        source.h = settings.ButtonHeight;
-
-        SDL_Rect destination;
-        destination.x = settings.ButtonInGameX;
-        destination.y = settings.ButtonInGameY;
-        destination.w = settings.ButtonInGameWidth;
-        destination.h = settings.ButtonInGameHeight;
-
-        m_StartButton = new StartButton(destination, source, settings.StartButtonPath);
-    }
-
     Game::~Game() {
         delete m_Engine;
-        delete m_StartButton;
     }
 
     bool Game::IsRunning() const {
@@ -68,10 +50,9 @@ namespace Avoidant {
             m_Map.Draw();
 
         else {
-            if (m_StartButton)
-                m_StartButton->Render();
+            if (m_Ui)
+                m_Ui->Render();
         }
-
 
         SDL_RenderPresent(Engine::Window::Renderer);
     }
@@ -89,7 +70,7 @@ namespace Avoidant {
             case SDL_MOUSEBUTTONDOWN: {
                 int x, y;
                 SDL_GetMouseState(&x, &y);
-                if (m_StartButton->CheckClicked(x, y))
+                if (m_Ui->IsStartGameButtonClicked(x,y))
                     StartGame();
 
                 break;
@@ -98,9 +79,8 @@ namespace Avoidant {
     }
 
     void Game::StartGame() {
-        LOG("START!!!!!!!!");
         m_Map.Init();
-        delete m_StartButton;
+        delete m_Ui;
     }
 
 #pragma endregion

@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Button.h"
 
 #include <Code/Utilities/Macros.h>

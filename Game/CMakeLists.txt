@@ -42,7 +42,9 @@ add_executable(Game "${Engine}"
         Code/UI/Button.cpp
         Code/UI/Button.h
         Code/UI/StartButton.cpp
-        Code/UI/StartButton.h)
+        Code/UI/StartButton.h
+        Code/UI/UI.cpp
+        Code/UI/UI.h)
 
 target_link_libraries(Game PUBLIC Engine ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES} SDL_ttf)
 target_link_libraries(Game PUBLIC ${CMAKE_SOURCE_DIR}/Include/box2d/libbox2d.a)
