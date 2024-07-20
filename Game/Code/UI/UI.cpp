@@ -4,20 +4,17 @@ namespace Avoidant {
     UI::~UI() {
         delete m_StartButton;
 
-        TTF_CloseFont(m_Font);
+        TTF_CloseFont(m_TitleFont);
         SDL_DestroyTexture(m_TitleTexture);
         SDL_DestroyTexture(m_CreditsTexture);
         TTF_Quit();
     }
 
     void UI::Init() {
-        Settings settings;
-        m_Font = TTF_OpenFont(settings.MainMenuFontPath, settings.FontSize);
-        if (!m_Font) {
-            LOG_ERROR("[Font loading error] " << TTF_GetError());
-            return;
-        }
+        InitTitleFont();
+        InitCreditsFont();
 
+        InitCredits();
         InitBackground();
         InitStartButton();
         InitTitleText();
@@ -48,6 +45,7 @@ namespace Avoidant {
         DrawBackground();
 
         Engine::SpriteLoader::Draw(m_TitleTexture, m_TitleRect);
+        Engine::SpriteLoader::Draw(m_CreditsTexture, m_CreditsRect);
 
         m_StartButton->Render();
     }
@@ -68,7 +66,7 @@ namespace Avoidant {
 
         SDL_Color color = {255, 255, 255, 255};
 
-        SDL_Surface *surface = TTF_RenderText_Blended(m_Font, "Avoidant", color);
+        SDL_Surface *surface = TTF_RenderText_Blended(m_TitleFont, "Avoidant", color);
         if (!surface) {
             LOG_ERROR("Surface creating error" << TTF_GetError());
             return;
@@ -88,5 +86,44 @@ namespace Avoidant {
         Settings settings;
 
         m_BackgroundTexture = Engine::SpriteLoader::LoadTexture(settings.BackgroundPath);
+    }
+
+    void UI::InitCredits() {
+        Settings settings;
+
+        SDL_Color color = {255, 255, 255, 255};
+
+        SDL_Surface *surface = TTF_RenderText_Blended(m_CreditsFont, "by Damian Gorenski", color);
+        if (!surface) {
+            LOG_ERROR("Surface creating error " << TTF_GetError());
+            return;
+        }
+
+        m_CreditsTexture = SDL_CreateTextureFromSurface(Engine::Window::Renderer, surface);
+
+        m_CreditsRect.x = settings.CreditsXPosition;
+        m_CreditsRect.y = settings.CreditsYPosition;
+        m_CreditsRect.w = surface->w;
+        m_CreditsRect.h = surface->h;
+
+        SDL_FreeSurface(surface);
+    }
+
+    void UI::InitTitleFont() {
+        Settings settings;
+        m_TitleFont = TTF_OpenFont(settings.MainMenuFontPath, settings.TitleSize);
+        if (!m_TitleFont) {
+            LOG_ERROR("[Font loading error] " << TTF_GetError());
+            return;
+        }
+    }
+
+    void UI::InitCreditsFont() {
+        Settings settings;
+        m_CreditsFont = TTF_OpenFont(settings.CreditsFontPath, settings.CreditsSize);
+        if (!m_TitleFont) {
+            LOG_ERROR("[Font loading error] " << TTF_GetError());
+            return;
+        }
     }
 } // Avoidant
