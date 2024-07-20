@@ -3,11 +3,23 @@
 namespace Avoidant {
     UI::~UI() {
         delete m_StartButton;
+
+        TTF_CloseFont(m_Font);
+        SDL_DestroyTexture(m_TitleTexture);
+        SDL_DestroyTexture(m_CreditsTexture);
+        TTF_Quit();
     }
 
     void UI::Init() {
-        InitStartButton();
+        Settings settings;
+        m_Font = TTF_OpenFont(settings.MainMenuFontPath, settings.FontSize);
+        if (!m_Font) {
+            LOG_ERROR("[Font loading error] " << TTF_GetError());
+            return;
+        }
 
+        InitStartButton();
+        InitTitleText();
     }
 
     void UI::InitStartButton() {
@@ -28,10 +40,34 @@ namespace Avoidant {
     }
 
     bool UI::IsStartGameButtonClicked(int x, int y) const {
-        return m_StartButton->CheckClicked(x,y);
+        return m_StartButton->CheckClicked(x, y);
     }
 
     void UI::Render() {
-        m_StartButton->Render();
+        if (m_StartButton)
+            m_StartButton->Render();
+
+        SDL_RenderCopy(Engine::Window::Renderer, m_TitleTexture, nullptr, &m_TitleRect);
+    }
+
+    void UI::InitTitleText() {
+        Settings settings;
+
+        SDL_Color color = {15, 15, 15, 15};
+
+        SDL_Surface *surface = TTF_RenderText_Blended(m_Font, "Avoidant", color);
+        if (!surface) {
+            LOG_ERROR("Surface creating error");
+            LOG_ERROR(SDL_GetError());
+        }
+
+        m_TitleTexture = SDL_CreateTextureFromSurface(Engine::Window::Renderer, surface);
+
+        m_TitleRect.x = settings.TitleXPosition;
+        m_TitleRect.y = settings.TitleYPosition;
+        m_TitleRect.w = surface->w;
+        m_TitleRect.h = surface->h;
+
+        SDL_FreeSurface(surface);
     }
 } // Avoidant

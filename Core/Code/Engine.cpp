@@ -8,6 +8,8 @@ namespace Engine {
 
     Engine::~Engine() {
         delete m_Window;
+        SDL_Quit();
+        IMG_Quit();
     }
 
     Window* Engine::GetWindow() const {
