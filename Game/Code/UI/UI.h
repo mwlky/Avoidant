@@ -16,6 +16,7 @@ namespace Avoidant {
 
     private:
         void InitTitleText();
+        void InitBackground();
         void InitStartButton();
 
     private:
@@ -27,6 +28,11 @@ namespace Avoidant {
 
         SDL_Rect m_CreditsRect;
         SDL_Texture* m_CreditsTexture = nullptr;
+
+        SDL_Rect m_BackgroundRect;
+        SDL_Texture* m_BackgroundTexture = nullptr;
+
+        void DrawBackground() const;
     };
 
 } // Avoidant

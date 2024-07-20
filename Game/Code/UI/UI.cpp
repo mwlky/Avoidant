@@ -18,6 +18,7 @@ namespace Avoidant {
             return;
         }
 
+        InitBackground();
         InitStartButton();
         InitTitleText();
     }
@@ -44,21 +45,33 @@ namespace Avoidant {
     }
 
     void UI::Render() {
-        if (m_StartButton)
-            m_StartButton->Render();
+        DrawBackground();
 
-        SDL_RenderCopy(Engine::Window::Renderer, m_TitleTexture, nullptr, &m_TitleRect);
+        Engine::SpriteLoader::Draw(m_TitleTexture, m_TitleRect);
+
+        m_StartButton->Render();
+    }
+
+    void UI::DrawBackground() const {
+        Settings settings;
+
+        int width = std::round(settings.Width * 1.1f);
+        int height = std::round(settings.Height * 1.1f);
+
+        SDL_Rect backgroundDestination {-2, 0, width, height};
+
+        Engine::SpriteLoader::Draw(m_BackgroundTexture, backgroundDestination);
     }
 
     void UI::InitTitleText() {
         Settings settings;
 
-        SDL_Color color = {15, 15, 15, 15};
+        SDL_Color color = {255, 255, 255, 255};
 
         SDL_Surface *surface = TTF_RenderText_Blended(m_Font, "Avoidant", color);
         if (!surface) {
-            LOG_ERROR("Surface creating error");
-            LOG_ERROR(SDL_GetError());
+            LOG_ERROR("Surface creating error" << TTF_GetError());
+            return;
         }
 
         m_TitleTexture = SDL_CreateTextureFromSurface(Engine::Window::Renderer, surface);
@@ -69,5 +82,11 @@ namespace Avoidant {
         m_TitleRect.h = surface->h;
 
         SDL_FreeSurface(surface);
+    }
+
+    void UI::InitBackground() {
+        Settings settings;
+
+        m_BackgroundTexture = Engine::SpriteLoader::LoadTexture(settings.BackgroundPath);
     }
 } // Avoidant

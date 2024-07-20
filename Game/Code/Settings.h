@@ -98,11 +98,13 @@ namespace Avoidant {
         const int ButtonHeight = 56;
 
         const int FontSize = 25;
-        const char* MainMenuFontPath = "../../Assets/UI/PixelFlag.ttf";
+        const char* MainMenuFontPath = "../../Assets/UI/Pixels.ttf";
 
         const int TitleXPosition = 0;
         const int TitleYPosition = 0;
-        const int TitleWidth = 100;
-        const int TitleHeight = 100;
+        const int TitleWidth = 600;
+        const int TitleHeight = 300;
+
+        const char* BackgroundPath = "../../Assets/UI/MenuBackground.png";
     };
 }

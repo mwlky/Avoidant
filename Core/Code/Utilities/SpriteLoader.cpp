@@ -46,6 +46,20 @@ namespace Engine {
         else
             LOG_ERROR("No found texture to draw");
     }
+
+    SDL_Texture *SpriteLoader::LoadText(const char* text, TTF_Font * font, SDL_Color textColor) {
+        SDL_Surface *surface = TTF_RenderText_Blended(font, text, textColor);
+
+        if (!surface) {
+            LOG_ERROR("Surface creating error" << TTF_GetError());
+            return nullptr;
+        }
+
+        SDL_Texture* textureFromSurface = SDL_CreateTextureFromSurface(Engine::Window::Renderer, surface);
+        SDL_FreeSurface(surface);
+
+        return textureFromSurface;
+    }
 }
 
 
