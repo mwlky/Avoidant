@@ -9,14 +9,17 @@ namespace Avoidant {
         m_Engine->OpenWindow(settings.WindowName, settings.XPosition, settings.YPosition, settings.Width,
                              settings.Height);
 
-        m_Ui = new UI;
+        m_Ui = new MainMenu;
         m_Ui->Init();
+
+        m_GameOverPanel = new GameOverPanel;
 
         m_IsRunning = true;
     }
 
     Game::~Game() {
         delete m_Engine;
+        delete m_GameOverPanel;
     }
 
     bool Game::IsRunning() const {
@@ -41,18 +44,18 @@ namespace Avoidant {
     void Game::Render() {
 
         if (SDL_RenderClear(Engine::Window::Renderer) != 0) {
-            LOG_ERROR("[Renderer Error] ");
-            LOG_ERROR(SDL_GetError());
+            LOG_ERROR("[Renderer Error] " << SDL_GetError());
             return;
         }
 
-        if (m_Map.IsInitialized())
+        if (m_Map.IsInitialized() && m_Map.IsPlayerAlive())
             m_Map.Draw();
 
-        else {
-            if (m_Ui)
-                m_Ui->Render();
-        }
+        else if (m_Map.IsInitialized() && !m_Map.IsPlayerAlive())
+            m_GameOverPanel->Render(m_Map.GetScore());
+
+        else if (m_Ui)
+            m_Ui->Render();
 
         SDL_RenderPresent(Engine::Window::Renderer);
     }
@@ -70,7 +73,11 @@ namespace Avoidant {
             case SDL_MOUSEBUTTONDOWN: {
                 int x, y;
                 SDL_GetMouseState(&x, &y);
-                if (m_Ui->IsStartGameButtonClicked(x,y))
+
+                if (m_Map.IsInitialized())
+                    break;
+
+                if (m_Ui->IsStartGameButtonClicked(x, y))
                     StartGame();
 
                 break;

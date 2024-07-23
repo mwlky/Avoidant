@@ -3,10 +3,10 @@
 
 namespace Avoidant {
 
-    class UI {
+    class MainMenu {
     public:
-        UI() = default;
-        ~UI();
+        MainMenu() = default;
+        ~MainMenu();
 
         void Init();
         void Render();

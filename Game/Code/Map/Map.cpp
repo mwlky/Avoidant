@@ -112,7 +112,7 @@ namespace Avoidant {
         playerBody->CreateFixture(&fixtureDef);
 
         b2PolygonShape footSensorBox;
-        footSensorBox.SetAsBox(data.xSize * data.ScalingFactor * 0.5f , data.ySize * data.ScalingFactor * 0.1f,
+        footSensorBox.SetAsBox(data.xSize * data.ScalingFactor * 0.5f, data.ySize * data.ScalingFactor * 0.1f,
                                b2Vec2(0, (-data.ySize + 80.f) * data.ScalingFactor), 0);
 
         b2FixtureDef sensorFixtureDef;
@@ -141,8 +141,11 @@ namespace Avoidant {
 
         DrawBackground();
         DrawTiles();
-        m_Player->Render();
-        m_BulletsManager->Draw();
+
+        if (IsPlayerAlive()) {
+            m_Player->Render();
+            m_BulletsManager->Draw();
+        }
 
 #if DEBUG
         m_World->DebugDraw();
@@ -158,9 +161,11 @@ namespace Avoidant {
 #pragma region === Tick ===
 
     void Map::Tick(double deltaTime) {
+
         m_Player->Tick(deltaTime);
         m_BulletsManager->Tick(deltaTime);
         m_World->Step(deltaTime, 6, 8);
+        m_Score += deltaTime;
     }
 
 #pragma endregion
@@ -181,6 +186,10 @@ namespace Avoidant {
 
     bool Map::IsInitialized() const {
         return m_IsInitialized;
+    }
+
+    float Map::GetScore() const {
+        return std::round(m_Score);
     }
 
 #pragma endregion

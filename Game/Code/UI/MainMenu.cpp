@@ -1,16 +1,15 @@
-#include "UI.h"
+#include "MainMenu.h"
 
 namespace Avoidant {
-    UI::~UI() {
+    MainMenu::~MainMenu() {
         delete m_StartButton;
 
         TTF_CloseFont(m_TitleFont);
         SDL_DestroyTexture(m_TitleTexture);
         SDL_DestroyTexture(m_CreditsTexture);
-        TTF_Quit();
     }
 
-    void UI::Init() {
+    void MainMenu::Init() {
         InitTitleFont();
         InitCreditsFont();
 
@@ -20,7 +19,7 @@ namespace Avoidant {
         InitTitleText();
     }
 
-    void UI::InitStartButton() {
+    void MainMenu::InitStartButton() {
         Settings settings;
 
         SDL_Rect source;
@@ -37,11 +36,11 @@ namespace Avoidant {
         m_StartButton = new StartButton(destination, source, settings.StartButtonPath);
     }
 
-    bool UI::IsStartGameButtonClicked(int x, int y) const {
+    bool MainMenu::IsStartGameButtonClicked(int x, int y) const {
         return m_StartButton->CheckClicked(x, y);
     }
 
-    void UI::Render() {
+    void MainMenu::Render() {
         DrawBackground();
 
         Engine::SpriteLoader::Draw(m_TitleTexture, m_TitleRect);
@@ -50,7 +49,7 @@ namespace Avoidant {
         m_StartButton->Render();
     }
 
-    void UI::DrawBackground() const {
+    void MainMenu::DrawBackground() const {
         Settings settings;
 
         int width = std::round(settings.Width * 1.1f);
@@ -61,7 +60,7 @@ namespace Avoidant {
         Engine::SpriteLoader::Draw(m_BackgroundTexture, backgroundDestination);
     }
 
-    void UI::InitTitleText() {
+    void MainMenu::InitTitleText() {
         Settings settings;
 
         SDL_Color color = {255, 255, 255, 255};
@@ -82,13 +81,13 @@ namespace Avoidant {
         SDL_FreeSurface(surface);
     }
 
-    void UI::InitBackground() {
+    void MainMenu::InitBackground() {
         Settings settings;
 
         m_BackgroundTexture = Engine::SpriteLoader::LoadTexture(settings.BackgroundPath);
     }
 
-    void UI::InitCredits() {
+    void MainMenu::InitCredits() {
         Settings settings;
 
         SDL_Color color = {255, 255, 255, 255};
@@ -109,7 +108,7 @@ namespace Avoidant {
         SDL_FreeSurface(surface);
     }
 
-    void UI::InitTitleFont() {
+    void MainMenu::InitTitleFont() {
         Settings settings;
         m_TitleFont = TTF_OpenFont(settings.MainMenuFontPath, settings.TitleSize);
         if (!m_TitleFont) {
@@ -118,7 +117,7 @@ namespace Avoidant {
         }
     }
 
-    void UI::InitCreditsFont() {
+    void MainMenu::InitCreditsFont() {
         Settings settings;
         m_CreditsFont = TTF_OpenFont(settings.CreditsFontPath, settings.CreditsSize);
         if (!m_TitleFont) {

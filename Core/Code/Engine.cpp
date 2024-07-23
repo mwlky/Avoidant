@@ -10,6 +10,7 @@ namespace Engine {
         delete m_Window;
         SDL_Quit();
         IMG_Quit();
+        TTF_Quit();
     }
 
     Window* Engine::GetWindow() const {

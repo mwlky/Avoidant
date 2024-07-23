@@ -28,6 +28,8 @@ namespace Avoidant {
         bool IsPlayerAlive() const;
         bool IsInitialized() const;
 
+        float GetScore() const;
+
     private:
         void DrawTiles();
         void InitMapTiles();
@@ -54,6 +56,8 @@ namespace Avoidant {
 #endif
 
     private:
+        double m_Score = 0.;
+
         bool m_IsInitialized = false;
 
 

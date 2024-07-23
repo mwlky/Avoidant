@@ -4,7 +4,8 @@
 #include "Map/Map.h"
 #include "Player/Player.h"
 #include "UI/StartButton.h"
-#include "UI/UI.h"
+#include "UI/MainMenu.h"
+#include "UI/GameOverPanel.h"
 
 namespace Avoidant{
 
@@ -30,8 +31,9 @@ namespace Avoidant{
         Map m_Map;
         SDL_Event m_Event;
 
-        UI* m_Ui = nullptr;
+        MainMenu* m_Ui = nullptr;
         Engine::Engine* m_Engine = nullptr;
+        GameOverPanel* m_GameOverPanel = nullptr;
     };
 }
 

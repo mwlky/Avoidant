@@ -43,8 +43,11 @@ add_executable(Game "${Engine}"
         Code/UI/Button.h
         Code/UI/StartButton.cpp
         Code/UI/StartButton.h
-        Code/UI/UI.cpp
-        Code/UI/UI.h)
+        Code/UI/MainMenu.cpp
+        Code/UI/MainMenu.h
+        Code/UI/GameOverPanel.cpp
+        Code/UI/GameOverPanel.h
+)
 
 target_link_libraries(Game PUBLIC Engine
         ${SDL2_LIBRARIES}

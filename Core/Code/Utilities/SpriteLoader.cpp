@@ -51,9 +51,12 @@ namespace Engine {
         SDL_Surface *surface = TTF_RenderText_Blended(font, text, textColor);
 
         if (!surface) {
-            LOG_ERROR("Surface creating error" << TTF_GetError());
+            LOG_ERROR("Surface creating error: " << TTF_GetError());
             return nullptr;
         }
+
+        LOG(surface->w);
+        LOG(surface->h);
 
         SDL_Texture* textureFromSurface = SDL_CreateTextureFromSurface(Engine::Window::Renderer, surface);
         SDL_FreeSurface(surface);

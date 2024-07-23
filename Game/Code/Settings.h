@@ -67,7 +67,7 @@ namespace Avoidant {
         // ======================= Bullets Settings =======================================
         const char* BulletSpritePath = "../../Assets/Bullet/bullet.png";
 
-        const float CooldownBetweenBullets = 2.f;
+        const float CooldownBetweenBullets = 0.1f;
 
         const float MaxBulletHeight = 5;
         const int LeftSpawnPosition = 1;
@@ -86,7 +86,7 @@ namespace Avoidant {
         const int HearthInGameSize = 64;
         const int HearthSpacing = HearthInGameSize * 0.9f;
 
-        // ======================= UI=======================================
+        // ======================= MainMenu=======================================
         const char* StartButtonPath = "../../Assets/UI/StartButton.png";
 
         const int ButtonInGameX = Width * 0.4f + 50;
@@ -109,5 +109,16 @@ namespace Avoidant {
         const int CreditsSize = 80;
         const int CreditsXPosition = Width * 0.685f;
         const int CreditsYPosition = Height * 0.9;
+
+        const int GameOverTextSize = 150;
+        const int GameOverTextXPosition = Width * 0.5f - 200;
+        const int GameOverTextYPosition =  Height * 0.5f - 150;
+        const int GameOverTextWidth = 377;
+        const int GameOverTextHeight = 110;
+
+        const int ScoreDestinationX = Width * 0.5f - 160;
+        const int ScoreDestinationY = 350;
+        const int ScoreDestinationWidth = 311;
+        const int ScoreDestinationHeight = 110;
     };
 }
