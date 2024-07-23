@@ -15,18 +15,20 @@ namespace Avoidant {
 
     private:
         void LoadFont();
+        void LoadBackground();
         void LoadGameOverTexture();
-        void ShowHighScore();
+
+        void RenderBackground();
+        void RenderScore(float score) const;
 
     private:
-        int m_Score = 0;
-
-        TTF_Font* m_Font = nullptr;
 
         SDL_Rect m_GameOverRect {};
 
-        SDL_Texture* m_ScoreTexture = nullptr;
+        TTF_Font* m_Font = nullptr;
         SDL_Texture* m_GameOverTexture = nullptr;
+        SDL_Texture* m_BackgroundTexture = nullptr;
+
     };
 
 } // Avoidant

@@ -110,14 +110,14 @@ namespace Avoidant {
         const int CreditsXPosition = Width * 0.685f;
         const int CreditsYPosition = Height * 0.9;
 
-        const int GameOverTextSize = 150;
-        const int GameOverTextXPosition = Width * 0.5f - 200;
-        const int GameOverTextYPosition =  Height * 0.5f - 150;
-        const int GameOverTextWidth = 377;
-        const int GameOverTextHeight = 110;
+        const int GameOverTextSize = 200;
+        const int GameOverTextXPosition = Width * 0.5f - 250;
+        const int GameOverTextYPosition =  Height * 0.1f;
+        const int GameOverTextWidth = 502;
+        const int GameOverTextHeight = 132;
 
         const int ScoreDestinationX = Width * 0.5f - 160;
-        const int ScoreDestinationY = 350;
+        const int ScoreDestinationY = Height * 0.7f;
         const int ScoreDestinationWidth = 311;
         const int ScoreDestinationHeight = 110;
     };

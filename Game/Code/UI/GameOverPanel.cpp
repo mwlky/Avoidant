@@ -4,17 +4,19 @@ namespace Avoidant {
     GameOverPanel::GameOverPanel() {
 
         LoadFont();
+        LoadBackground();
         LoadGameOverTexture();
     }
 
     GameOverPanel::~GameOverPanel() {
         TTF_CloseFont(m_Font);
+        SDL_DestroyTexture(m_BackgroundTexture);
         SDL_DestroyTexture(m_GameOverTexture);
     }
 
     void GameOverPanel::LoadGameOverTexture() {
 
-        SDL_Color color = {13, 51, 34, 255};
+        SDL_Color color = {255, 255, 255, 255};
         m_GameOverTexture = Engine::SpriteLoader::LoadText("Game Over!", m_Font, color);
 
         Settings settings;
@@ -32,23 +34,41 @@ namespace Avoidant {
     }
 
     void GameOverPanel::Render(float score) {
+        RenderBackground();
 
-        Settings settings;
-        SDL_Color color = {255, 255, 255, 255};
-
-        std::string text = "Score: " + std::to_string((int)score);
-
-        SDL_Texture *texture = Engine::SpriteLoader::LoadText(text.c_str(), m_Font, color);
-
-        SDL_Rect scoreRect = {settings.ScoreDestinationX, settings.ScoreDestinationY, settings.ScoreDestinationWidth, settings.ScoreDestinationHeight};
-
-        Engine::SpriteLoader::Draw(texture, scoreRect);
-        SDL_DestroyTexture(texture);
-
+        RenderScore(score);
         Engine::SpriteLoader::Draw(m_GameOverTexture, m_GameOverRect);
     }
 
-    void GameOverPanel::ShowHighScore() {
+    void GameOverPanel::RenderScore(float score) const {
+        Settings settings;
+        SDL_Color color = {255, 255, 255, 255};
 
+        std::string text = "Score: " + std::to_string((int) score);
+
+        SDL_Texture *texture = Engine::SpriteLoader::LoadText(text.c_str(), m_Font, color);
+
+        SDL_Rect scoreRect = {settings.ScoreDestinationX, settings.ScoreDestinationY, settings.ScoreDestinationWidth,
+                              settings.ScoreDestinationHeight};
+
+        Engine::SpriteLoader::Draw(texture, scoreRect);
+        SDL_DestroyTexture(texture);
+    }
+
+    void GameOverPanel::RenderBackground() {
+        Settings settings;
+
+        int width = std::round(settings.Width * 1.1f);
+        int height = std::round(settings.Height * 1.1f);
+
+        SDL_Rect backgroundDestination {-2, 0, width, height};
+
+        Engine::SpriteLoader::Draw(m_BackgroundTexture, backgroundDestination);
+    }
+
+    void GameOverPanel::LoadBackground() {
+        Settings settings;
+
+        m_BackgroundTexture = Engine::SpriteLoader::LoadTexture(settings.BackgroundPath);
     }
 } // Avoidant
