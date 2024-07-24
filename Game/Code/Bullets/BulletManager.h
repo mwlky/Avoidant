@@ -19,11 +19,12 @@ namespace Avoidant {
     private:
 
         void SpawnBullet();
-        void TrySpawnBullet();
         void KillBullets();
+        void TrySpawnBullet();
+        void ReduceCooldown();
 
-        int GenerateDirection();
         float GenerateY();
+        int GenerateDirection();
 
     private:
         std::vector<Bullet> m_Bullets;
@@ -31,5 +32,8 @@ namespace Avoidant {
         b2World *m_World = nullptr;
 
         float m_CurrentTime = 0;
+        float m_DelayToSpawnBullet = 0;
+
+        void TickBullets(double deltaTime);
     };
 }

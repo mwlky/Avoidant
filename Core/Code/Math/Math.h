@@ -6,8 +6,8 @@ namespace Engine{
     public:
         Math();
 
-        int GenerateNumber(int min, int max);
-        float GenerateNumber(float min, float max);
+        static int GenerateNumber(int min, int max);
+        static float GenerateNumber(float min, float max);
 
     };
 

@@ -5,6 +5,9 @@
 namespace Avoidant {
     BulletManager::BulletManager(b2World *world) {
         m_World = world;
+
+        Settings settings;
+        m_DelayToSpawnBullet = settings.CooldownBetweenBullets;
     }
 
     BulletManager::~BulletManager() {
@@ -14,20 +17,28 @@ namespace Avoidant {
     void BulletManager::Tick(double deltaTime) {
         m_CurrentTime += deltaTime;
 
+        TickBullets(deltaTime);
+
+        KillBullets();
+        TrySpawnBullet();
+    }
+
+    void BulletManager::TickBullets(double deltaTime) {
         for (Bullet &bullet: m_Bullets)
             bullet.Tick(deltaTime);
-
-        TrySpawnBullet();
-        KillBullets();
     }
 
     void BulletManager::TrySpawnBullet() {
+        if (m_CurrentTime < m_DelayToSpawnBullet)
+            return;
+
         Settings settings;
 
-        if (m_CurrentTime < settings.CooldownBetweenBullets)
+        if(m_Bullets.size() >= settings.MaxBullets)
             return;
 
         SpawnBullet();
+        ReduceCooldown();
         m_CurrentTime = 0;
     }
 
@@ -98,5 +109,12 @@ namespace Avoidant {
         });
 
         m_Bullets.erase(it, m_Bullets.end());
+    }
+
+    void BulletManager::ReduceCooldown() {
+        Settings settings;
+
+        m_DelayToSpawnBullet -= settings.CooldownReducePerTick;
+        LOG(m_DelayToSpawnBullet);
     }
 }

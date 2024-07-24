@@ -55,9 +55,6 @@ namespace Engine {
             return nullptr;
         }
 
-        LOG(surface->w);
-        LOG(surface->h);
-
         SDL_Texture* textureFromSurface = SDL_CreateTextureFromSurface(Engine::Window::Renderer, surface);
         SDL_FreeSurface(surface);
 

@@ -1,6 +1,4 @@
 #include "Bullet.h"
-#include "../Settings.h"
-#include "BulletUserData.h"
 
 namespace Avoidant {
 
@@ -18,7 +16,7 @@ namespace Avoidant {
         m_SourceRect.x = m_SourceRect.y = 0;
         m_SourceRect.w = m_SourceRect.h = settings.BulletSpriteSize;
 
-        b2Vec2 speed = {settings.BulletSpeed * direction * 1.f ,0};
+        b2Vec2 speed = {GetRandomSpeed() * direction * 1.f ,0};
 
         m_Body->SetLinearVelocity(speed);
     }
@@ -43,7 +41,7 @@ namespace Avoidant {
             SDL_RenderCopy(Engine::Window::Renderer, m_Texture, &m_SourceRect, &m_DestRect);
     }
 
-    bool Bullet::CheckLifetime() {
+    bool Bullet::CheckLifetime() const {
         Settings settings;
 
         return m_LifeTime >= settings.MaxBulletLifeTime;
@@ -54,7 +52,19 @@ namespace Avoidant {
     }
 
     Bullet::~Bullet() {
+    }
 
+    float Bullet::GetRandomSpeed() {
+        Settings settings;
+
+        float min = settings.MinBulletSpeed;
+        float max = settings.MaxBulletSpeed;
+
+        float speed = Engine::Math::GenerateNumber(min,max);
+
+        LOG(speed);
+
+        return speed;
     }
 }
 

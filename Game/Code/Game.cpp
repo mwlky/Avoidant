@@ -18,8 +18,8 @@ namespace Avoidant {
     }
 
     Game::~Game() {
-        delete m_Engine;
         delete m_GameOverPanel;
+        delete m_Engine;
     }
 
     bool Game::IsRunning() const {

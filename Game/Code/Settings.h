@@ -67,16 +67,20 @@ namespace Avoidant {
         // ======================= Bullets Settings =======================================
         const char* BulletSpritePath = "../../Assets/Bullet/bullet.png";
 
-        const float CooldownBetweenBullets = 0.1f;
-
         const float MaxBulletHeight = 5;
+        const float CooldownBetweenBullets = 3.f;
+        const float CooldownReducePerTick = 0.5f;
+
+        const int MaxBullets = 10;
         const int LeftSpawnPosition = 1;
         const int RightSpawnPosition = Width * ScalingFactor;
 
         const int BulletSpriteSize = 32;
         const int InGameBulletSize = 92;
 
-        const float BulletSpeed = 5.f;
+        const int MinBulletSpeed = 5.f;
+        const int MaxBulletSpeed = 10.f;
+
         const float MaxBulletLifeTime = 3.f;
 
         // ======================= Hearts Settings =======================================

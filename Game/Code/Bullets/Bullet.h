@@ -1,6 +1,9 @@
-#include <box2d/b2_body.h>
-#include <Code/Engine.h>
 #include <SDL.h>
+#include <Code/Engine.h>
+#include <box2d/b2_body.h>
+
+#include "../Settings.h"
+#include "BulletUserData.h"
 
 namespace Avoidant {
     class Bullet {
@@ -10,15 +13,15 @@ namespace Avoidant {
 
         ~Bullet();
 
+        void Draw();
         void Tick(double deltaTime);
 
-        void Draw();
-
-        bool CheckLifetime();
+        bool CheckLifetime() const;
 
         b2Body *GetBody() const { return m_Body; }
 
     private:
+        float GetRandomSpeed();
         void UpdateLifeTime(float deltaTime);
 
     private:
