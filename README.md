@@ -10,6 +10,7 @@ This project is a simple 2D game engine developed in C++ designed for creating p
 - Clone repository `git clone https://github.com/mwlky/Avoidant.git`
 - go to directory `cd Avoidant/Game`
 - create directory `mkdir Build`
+- enter directory `cd Build`
 - compile project with `cmake ..`
 - build with `cmake --build . --target Game -j`
 - Enjoy!
