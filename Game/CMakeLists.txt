@@ -7,7 +7,7 @@ add_subdirectory("../Core" Core)
 
 if(CMAKE_BUILD_TYPE MATCHES Debug)
     add_compile_definitions(DEBUG)
-endif ()
+endif()
 
 file(GLOB_RECURSE GAME_SOURCES "Code/*.cpp" "Code/*.h" "../Core/*.cpp" "../Core/*.h")
 
@@ -18,4 +18,14 @@ target_link_libraries(Game PUBLIC Engine
         ${CMAKE_SOURCE_DIR}/Include/box2d/libbox2d.a
         ${CMAKE_SOURCE_DIR}/Include/SDL2_ttf/libSDL2_ttf.so
         ${CMAKE_SOURCE_DIR}/Include/SDL2_Image/libSDL2_image.so
+)
+
+set(ASSETS_SOURCE_DIR "${CMAKE_SOURCE_DIR}/Assets")
+set(ASSETS_DEST_DIR "${CMAKE_BINARY_DIR}/Assets")
+
+add_custom_command(
+        TARGET Game POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${ASSETS_SOURCE_DIR} ${ASSETS_DEST_DIR}
+        COMMENT "Copying Assets folder to build directory"
 )
