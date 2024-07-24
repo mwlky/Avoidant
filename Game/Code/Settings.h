@@ -23,6 +23,9 @@ namespace Avoidant {
 
         const float BulletCollisionDelay = 0.1f;
 
+        const float MinPlayerX = 0.1f;
+        const float MaxPlayerX = 12.5f;
+
         // Sprite size on sheet
         const int xSize = 50;
         const int ySize = 37;

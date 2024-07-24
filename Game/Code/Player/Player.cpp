@@ -60,19 +60,29 @@ namespace Avoidant {
     }
 
     void Player::CheckInput() {
+        Settings settings;
 
         const Uint8 *keystates = SDL_GetKeyboardState(NULL);
         float desiredX = 0;
 
-        Settings settings;
-
         if (keystates[SDL_SCANCODE_SPACE] && m_IsGrounded)
             Jump();
 
-        if (keystates[SDL_SCANCODE_D])
+        if (keystates[SDL_SCANCODE_D]){
             desiredX = settings.PlayerSpeed * settings.ScalingFactor;
-        else if (keystates[SDL_SCANCODE_A])
+
+            // Don't allow player to go outside the window
+            if(desiredX > 0 && m_Body->GetBody()->GetPosition().x > settings.MaxPlayerX)
+                desiredX = 0;
+        }
+
+        else if (keystates[SDL_SCANCODE_A]){
             desiredX = -settings.PlayerSpeed * settings.ScalingFactor;
+
+            // Don't allow player to go outside the window
+            if(desiredX < 0 && m_Body->GetBody()->GetPosition().x < settings.MinPlayerX)
+                desiredX = 0;
+        }
 
         if (desiredX != 0)
             PlayMovementAnimation(desiredX);
