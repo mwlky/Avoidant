@@ -125,7 +125,9 @@ namespace Avoidant {
     }
 
     void Map::InitBackground() {
-        m_BackgroundTexture = Engine::SpriteLoader::LoadTexture("../../Assets/Map/windrise-background-cut.png");
+        Settings settings;
+
+        m_BackgroundTexture = Engine::SpriteLoader::LoadTexture(settings.BackgroundTexture);
     }
 
 #pragma endregion

@@ -64,6 +64,7 @@ namespace Avoidant {
         const int InGameTileSize = 80;
 
         const char* TilesTexture = "Assets/Map/basic.png";
+        const char* BackgroundTexture = "Assets/Map/windrise-background-cut.png";
 
         // ======================= Physics Settings ======================================
         const float ScalingFactor = 0.01f;
