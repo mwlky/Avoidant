@@ -16,7 +16,7 @@ namespace Avoidant {
         const char* WindowName = "Avoidant";
 
         // ================ Player settings= ====================================
-        const char *SpritePath = "../../Assets/Player/adventurer-Sheet.png";
+        const char *SpritePath = "Assets/Player/adventurer-Sheet.png";
         const Engine::Vector2 StartPosition {5.5f,3.4f};
 
         const int StartLives = 3;
@@ -63,14 +63,14 @@ namespace Avoidant {
         const int TileSize = 32;
         const int InGameTileSize = 80;
 
-        const char* TilesTexture = "../../Assets/Map/basic.png";
+        const char* TilesTexture = "Assets/Map/basic.png";
 
         // ======================= Physics Settings ======================================
         const float ScalingFactor = 0.01f;
         Engine::Vector2 Gravity {0.f, 9.81f};
 
         // ======================= Bullets Settings =======================================
-        const char* BulletSpritePath = "../../Assets/Bullet/bullet.png";
+        const char* BulletSpritePath = "Assets/Bullet/bullet.png";
 
         const float MaxBulletHeight = 3;
         const float CooldownBetweenBullets = 3.f;
@@ -90,14 +90,14 @@ namespace Avoidant {
         const float MaxBulletLifeTime = 3.f;
 
         // ======================= Hearts Settings =======================================
-        const char* HeartsSpritePath = "../../Assets/Player/hearts.png";
+        const char* HeartsSpritePath = "Assets/Player/hearts.png";
 
         const int HearthSpriteSize = 16;
         const int HearthInGameSize = 64;
         const int HearthSpacing = HearthInGameSize * 0.9f;
 
         // ======================= MainMenu =======================================
-        const char* StartButtonPath = "../../Assets/UI/StartButton.png";
+        const char* StartButtonPath = "Assets/UI/StartButton.png";
 
         const int ButtonInGameX = Width * 0.4f + 50;
         const int ButtonInGameY = Height * 0.5f + 100;
@@ -108,13 +108,13 @@ namespace Avoidant {
         const int ButtonHeight = 56;
 
         const int TitleSize = 200;
-        const char* MainMenuFontPath = "../../Assets/UI/PixelFlag.ttf";
+        const char* MainMenuFontPath = "Assets/UI/PixelFlag.ttf";
 
         const int TitleXPosition = Width * 0.5f - 300;
         const int TitleYPosition = Height * 0.5f - 200;
 
-        const char* BackgroundPath = "../../Assets/UI/MenuBackground.png";
-        const char* CreditsFontPath = "../../Assets/UI/Pixels.ttf";
+        const char* BackgroundPath = "Assets/UI/MenuBackground.png";
+        const char* CreditsFontPath = "Assets/UI/Pixels.ttf";
 
         const int CreditsSize = 80;
         const int CreditsXPosition = Width * 0.685f;
