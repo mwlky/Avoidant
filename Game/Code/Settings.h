@@ -23,6 +23,7 @@ namespace Avoidant {
 
         const float BulletCollisionDelay = 0.1f;
 
+        const int MaxPlayerY = 15;
         const float MinPlayerX = 0.1f;
         const float MaxPlayerX = 12.5f;
 

@@ -60,11 +60,7 @@ namespace Avoidant {
         float min = settings.MinBulletSpeed;
         float max = settings.MaxBulletSpeed;
 
-        float speed = Engine::Math::GenerateNumber(min,max);
-
-        LOG(speed);
-
-        return speed;
+        return Engine::Math::GenerateNumber(min,max);
     }
 }
 

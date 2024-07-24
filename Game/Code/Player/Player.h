@@ -32,6 +32,7 @@ namespace Avoidant {
     private:
 
         void Jump();
+        void CheckY();
         void CheckInput();
         void BulletCollision();
         void PlayRunAnimation();

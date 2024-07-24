@@ -17,7 +17,6 @@ namespace Avoidant {
         SDL_DestroyTexture(m_PlayerTexture);
 
         delete m_HeartsManager;
-//        delete m_Body;
     }
 
     void Player::Init() {
@@ -27,6 +26,7 @@ namespace Avoidant {
     }
 
     void Player::Tick(double deltaTime) {
+        CheckY();
         CheckInput();
         UpdatePlayerPosition();
         CheckPlayerJumpAnimation();
@@ -245,13 +245,19 @@ namespace Avoidant {
         m_BulletCollisionTime = 0;
 
         m_CurrentLives--;
-
-        if (m_CurrentLives <= 0)
-            LOG("DEAD!");
     }
 
     bool Player::IsAlive() const {
         return m_CurrentLives > 0;
+    }
+
+    void Player::CheckY() {
+        Settings settings;
+
+        if(m_Body->GetBody()->GetPosition().y < settings.MaxPlayerY)
+            return;
+
+        m_CurrentLives = 0;
     }
 
 #pragma endregion
