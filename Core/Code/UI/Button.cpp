@@ -1,12 +1,12 @@
 #include "Button.h"
 
-namespace Avoidant {
+namespace Engine {
 
     Button::Button(SDL_Rect destination, SDL_Rect source, const char *sprite) {
         m_Source = source;
         m_Destination = destination;
 
-        m_Texture = Engine::SpriteLoader::LoadTexture(sprite);
+        m_Texture = SpriteLoader::LoadTexture(sprite);
     }
 
     bool Button::CheckClicked(int x, int y) {
@@ -20,7 +20,7 @@ namespace Avoidant {
 
     void Button::Render() {
         if (m_Texture)
-            Engine::SpriteLoader::Draw(m_Texture, m_Source, m_Destination);
+            SpriteLoader::Draw(m_Texture, m_Source, m_Destination);
     }
 }
 

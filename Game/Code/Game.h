@@ -2,9 +2,9 @@
 #include <Code/Engine.h>
 
 #include "Map/Map.h"
+#include "UI/MainMenu.h"
 #include "Player/Player.h"
 #include "UI/StartButton.h"
-#include "UI/MainMenu.h"
 #include "UI/GameOverPanel.h"
 
 namespace Avoidant{

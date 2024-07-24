@@ -1,7 +1,7 @@
-#include "../Settings.h"
-
 #include <SDL.h>
 #include <Code/Engine.h>
+
+#include "../Settings.h"
 
 namespace Avoidant {
 

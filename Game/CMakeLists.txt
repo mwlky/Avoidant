@@ -39,8 +39,8 @@ add_executable(Game "${Engine}"
         Code/Bullets/BulletUserData.h
         Code/Player/HeartsManager.cpp
         Code/Player/HeartsManager.h
-        Code/UI/Button.cpp
-        Code/UI/Button.h
+        ../Core/Code/UI/Button.cpp
+        ../Core/Code/UI/Button.h
         Code/UI/StartButton.cpp
         Code/UI/StartButton.h
         Code/UI/MainMenu.cpp

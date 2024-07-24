@@ -5,8 +5,6 @@
 #include <Code/Engine.h>
 
 namespace Avoidant {
-
-
     class BulletManager {
 
     public:
@@ -22,6 +20,7 @@ namespace Avoidant {
         void KillBullets();
         void TrySpawnBullet();
         void GenerateCooldown();
+        void TickBullets(double deltaTime);
 
         float GenerateY();
         int GenerateDirection();
@@ -33,7 +32,5 @@ namespace Avoidant {
 
         float m_CurrentTime = 0;
         float m_DelayToSpawnBullet = 0;
-
-        void TickBullets(double deltaTime);
     };
 }

@@ -1,8 +1,8 @@
 #pragma once
 
 #include "../Settings.h"
-#include "../Bullets/BulletUserData.h"
 #include "HeartsManager.h"
+#include "../Bullets/BulletUserData.h"
 
 #include <box2d/box2d.h>
 #include <Code/Engine.h>

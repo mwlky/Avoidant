@@ -14,9 +14,7 @@ int main() {
     const int frameDelay = 1000 / FPS;
 
     while (game.IsRunning()){
-#if DEBUG
-        try {
-#endif
+
         frameStart = SDL_GetTicks();
         deltaTime = frameStart - lastTickTime;
 
@@ -29,13 +27,5 @@ int main() {
 
         if (frameDelay > frameTime)
             SDL_Delay(frameDelay - frameTime);
-
-#if DEBUG
-        }
-        catch (std::exception& e){
-            std::cerr << "Error: " << e.what() << std::endl;
-        }
-
-#endif
     }
 }

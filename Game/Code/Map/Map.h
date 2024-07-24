@@ -3,9 +3,8 @@
 #include <vector>
 #include <iostream>
 #include <box2d/box2d.h>
-
-#include <Code/Utilities/SpriteLoader.h>
 #include <Code/Math/Vector2.h>
+#include <Code/Utilities/SpriteLoader.h>
 
 #include "Tile.h"
 #include "TileData.h"
@@ -25,10 +24,10 @@ namespace Avoidant {
         void Draw();
         void Tick(double deltaTime);
 
+        float GetScore() const;
+
         bool IsPlayerAlive() const;
         bool IsInitialized() const;
-
-        float GetScore() const;
 
     private:
         void DrawTiles();
@@ -42,14 +41,13 @@ namespace Avoidant {
         void BeginContact(b2Contact *contact) override;
 
     private:
-        SDL_Texture *m_BackgroundTexture = nullptr;
+        Player* m_Player = nullptr;
+        b2World* m_World = nullptr;
+        BulletManager* m_BulletsManager = nullptr;
         SDL_Texture *m_TilesTexture = nullptr;
+        SDL_Texture *m_BackgroundTexture = nullptr;
 
         std::vector<Tile> m_TilesToDraw{};
-
-        b2World* m_World = nullptr;
-        Player* m_Player = nullptr;
-        BulletManager* m_BulletsManager = nullptr;
 
 #if DEBUG
         DebugDraw* m_DebugDraw = nullptr;

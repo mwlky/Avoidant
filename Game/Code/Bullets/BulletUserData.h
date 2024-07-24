@@ -2,10 +2,12 @@
 
 #include <string>
 
-class BulletUserData {
+namespace Avoidant {
+    class BulletUserData {
 
-public:
-    BulletUserData() : type("bullet") {}
+    public:
+        BulletUserData() : type("bullet") {}
 
-    std::string type;
-};
+        std::string type;
+    };
+}

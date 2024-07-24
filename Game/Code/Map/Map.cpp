@@ -17,12 +17,12 @@ namespace Avoidant {
 #pragma region === Init ===
 
     void Map::Init() {
+        Settings settings;
         m_IsInitialized = true;
 
         m_TilesTexture = Engine::SpriteLoader::LoadTexture(
-                "../../Assets/Map/basic.png");
+                settings.TilesTexture);
 
-        Settings settings;
 
         b2Vec2 gravity(settings.Gravity.x, settings.Gravity.y);
         m_World = new b2World(gravity);

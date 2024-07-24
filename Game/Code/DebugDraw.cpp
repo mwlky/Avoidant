@@ -26,7 +26,7 @@ void DebugDraw::DrawSolidPolygon(const b2Vec2 *vertices, int32 vertexCount, cons
 void DebugDraw::DrawCircle(const b2Vec2 &center, float radius, const b2Color &color) {
     SDL_SetRenderDrawColor(Engine::Window::Renderer, color.r * 255, color.g * 255, color.b * 255, 255);
 
-    int32 points = 100; // Number of points to draw the circle
+    int32 points = 100;
     float angleStep = 2 * M_PI / points;
 
     for (int32 i = 0; i < points; ++i) {
@@ -44,9 +44,9 @@ void DebugDraw::DrawCircle(const b2Vec2 &center, float radius, const b2Color &co
 
 void DebugDraw::DrawSolidCircle(const b2Vec2 &center, float radius, const b2Vec2 &axis, const b2Color &color) {
     SDL_SetRenderDrawColor(Engine::Window::Renderer, color.r * 255, color.g * 255, color.b * 255,
-                           128); // Semi-transparent
+                           128);
 
-    int32 points = 100; // Number of points to draw the circle
+    int32 points = 100;
     float angleStep = 2 * M_PI / points;
 
     for (int32 i = 0; i < points; ++i) {
@@ -74,5 +74,4 @@ void DebugDraw::DrawSegment(const b2Vec2 &p1, const b2Vec2 &p2, const b2Color &c
 }
 
 void DebugDraw::DrawTransform(const b2Transform &xf) {
-    // Not implemented for simplicity
 }

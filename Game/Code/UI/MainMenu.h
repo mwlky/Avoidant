@@ -14,13 +14,13 @@ namespace Avoidant {
         bool IsStartGameButtonClicked(int x, int y) const;
 
     private:
-        void InitTitleFont();
-        void InitCreditsFont();
 
         void InitCredits();
         void InitTitleText();
+        void InitTitleFont();
         void InitBackground();
         void InitStartButton();
+        void InitCreditsFont();
         void DrawBackground() const;
 
     private:

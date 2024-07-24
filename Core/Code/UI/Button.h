@@ -3,7 +3,7 @@
 #include <SDL.h>
 #include <Code/Engine.h>
 
-namespace Avoidant {
+namespace Engine {
 
     class Button {
 

@@ -1,8 +1,6 @@
 #include "HeartsManager.h"
 
 namespace Avoidant {
-
-
     HeartsManager::HeartsManager() {
         Settings settings;
 

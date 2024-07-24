@@ -3,7 +3,7 @@
 namespace Avoidant {
 
     struct TileData {
-
+    public:
         TileData() = default;
 
         TileData(int sheetX, int sheetY, bool hasCollision = false){
@@ -12,8 +12,9 @@ namespace Avoidant {
             HasCollision = hasCollision;
         }
 
+    public:
         int SheetX;
         int SheetY;
-        bool HasCollision;
+        bool HasCollision = false;
     };
 }

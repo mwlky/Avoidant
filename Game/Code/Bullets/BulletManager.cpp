@@ -17,10 +17,9 @@ namespace Avoidant {
     void BulletManager::Tick(double deltaTime) {
         m_CurrentTime += deltaTime;
 
-        TickBullets(deltaTime);
-
         KillBullets();
         TrySpawnBullet();
+        TickBullets(deltaTime);
     }
 
     void BulletManager::TickBullets(double deltaTime) {

@@ -4,10 +4,7 @@
 #include <Code/Math/Vector2.h>
 #include <Code/Utilities/SpriteLoader.h>
 
-#include "TileData.h"
 #include "../Settings.h"
-#include <SDL.h>
-
 
 namespace Avoidant {
 
@@ -21,13 +18,9 @@ namespace Avoidant {
     public:
         void Draw(SDL_Texture* tilesSheet);
 
-        bool IsColliding(Engine::Vector2 playerPosition) const;
-
     private:
         SDL_Rect m_Source{};
         SDL_Rect m_Destination{};
-
-        Engine::Vector2 m_Position{};
     };
 
 } // Avoidant

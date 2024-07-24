@@ -63,10 +63,11 @@ namespace Avoidant {
         const int TileSize = 32;
         const int InGameTileSize = 80;
 
-        Engine::Vector2 Gravity {0.f, 9.81f};
+        const char* TilesTexture = "../../Assets/Map/basic.png";
 
         // ======================= Physics Settings ======================================
         const float ScalingFactor = 0.01f;
+        Engine::Vector2 Gravity {0.f, 9.81f};
 
         // ======================= Bullets Settings =======================================
         const char* BulletSpritePath = "../../Assets/Bullet/bullet.png";
@@ -95,7 +96,7 @@ namespace Avoidant {
         const int HearthInGameSize = 64;
         const int HearthSpacing = HearthInGameSize * 0.9f;
 
-        // ======================= MainMenu=======================================
+        // ======================= MainMenu =======================================
         const char* StartButtonPath = "../../Assets/UI/StartButton.png";
 
         const int ButtonInGameX = Width * 0.4f + 50;

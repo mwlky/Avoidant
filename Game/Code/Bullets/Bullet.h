@@ -10,14 +10,12 @@ namespace Avoidant {
 
     public:
         Bullet(int direction, int x, int y, b2Body *body);
-
         ~Bullet();
 
         void Draw();
         void Tick(double deltaTime);
 
         bool CheckLifetime() const;
-
         b2Body *GetBody() const { return m_Body; }
 
     private:

@@ -1,11 +1,7 @@
 #include "Tile.h"
 
 namespace Avoidant {
-
-
     Tile::Tile(SDL_Rect source, SDL_Rect destination) {
-
-        m_Position = Engine::Vector2(destination.x, destination.y);
 
         m_Source = source;
         m_Destination = destination;
