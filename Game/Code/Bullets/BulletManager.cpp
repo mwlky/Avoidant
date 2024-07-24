@@ -38,7 +38,7 @@ namespace Avoidant {
             return;
 
         SpawnBullet();
-        ReduceCooldown();
+        GenerateCooldown();
         m_CurrentTime = 0;
     }
 
@@ -63,8 +63,8 @@ namespace Avoidant {
         b2Body *bulletBody = m_World->CreateBody(&bulletBodyDef);
 
         b2PolygonShape fixtureShape;
-        fixtureShape.SetAsBox(settings.InGameBulletSize * 0.5f * settings.ScalingFactor,
-                              settings.InGameBulletSize * 0.5f * settings.ScalingFactor);
+        fixtureShape.SetAsBox(settings.InGameBulletSize * 0.3f * settings.ScalingFactor,
+                              settings.InGameBulletSize * 0.35f * settings.ScalingFactor);
 
         b2FixtureDef polygonShape;
         polygonShape.isSensor = true;
@@ -111,10 +111,12 @@ namespace Avoidant {
         m_Bullets.erase(it, m_Bullets.end());
     }
 
-    void BulletManager::ReduceCooldown() {
+    void BulletManager::GenerateCooldown() {
         Settings settings;
 
-        m_DelayToSpawnBullet -= settings.CooldownReducePerTick;
-        LOG(m_DelayToSpawnBullet);
+        float min = settings.MinTimeToSpawnBullet;
+        float max = settings.MaxTimeToSpawnBullet;
+
+        m_DelayToSpawnBullet = Engine::Math::GenerateNumber(min,max);
     }
 }

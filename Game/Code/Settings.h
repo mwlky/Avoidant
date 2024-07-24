@@ -35,29 +35,29 @@ namespace Avoidant {
         const float JumpSpeed = 6.f;
 
         // Ticks time between switching sprites
+        const int RunSpritesAmount = 6;
         const int RunAnimationDelay = 120;
         const int RunAnimXPosOnSheet = xSize;
         const int RunAnimYPosOnSheet = ySize;
-        const int RunSpritesAmount = 6;
 
-        const int IdleAnimationDelay = 350;
-        const int IdleAnimationXPosOnSheet = xSize;
-        const int IdleAnimationYPosOnSheet = 0;
         const int IdleSpritesAmount = 3;
+        const int IdleAnimationDelay = 350;
+        const int IdleAnimationYPosOnSheet = 0;
+        const int IdleAnimationXPosOnSheet = xSize;
 
+        const int JumpSpritesAmount = 3;
         const int JumpAnimationDelay = 200;
         const int JumpAnimXPosOnSheet = xSize * 2;
         const int JumpAnimYPosOnSheet = ySize * 2;
-        const int JumpSpritesAmount = 3;
 
+        const int FallSpritesAmount = 2;
         const int FallAnimationDelay = 100;
         const int FallAnimXPosOnSheet = xSize;
         const int FallAnimYPosOnSheet = ySize * 3;
-        const int FallSpritesAmount = 2;
 
         // ====================== Map Settings =======================================
-        const int InGameTileSize = 80;
         const int TileSize = 32;
+        const int InGameTileSize = 80;
 
         Engine::Vector2 Gravity {0.f, 9.81f};
 
@@ -67,9 +67,10 @@ namespace Avoidant {
         // ======================= Bullets Settings =======================================
         const char* BulletSpritePath = "../../Assets/Bullet/bullet.png";
 
-        const float MaxBulletHeight = 5;
+        const float MaxBulletHeight = 3;
         const float CooldownBetweenBullets = 3.f;
-        const float CooldownReducePerTick = 0.5f;
+        const float MinTimeToSpawnBullet = 1.f;
+        const float MaxTimeToSpawnBullet = 2.f;
 
         const int MaxBullets = 10;
         const int LeftSpawnPosition = 1;

@@ -21,7 +21,7 @@ namespace Avoidant {
         void SpawnBullet();
         void KillBullets();
         void TrySpawnBullet();
-        void ReduceCooldown();
+        void GenerateCooldown();
 
         float GenerateY();
         int GenerateDirection();
